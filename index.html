@@ -107,8 +107,8 @@ h2{font-size:15px;margin:0 0 12px;font-weight:700}
 .btn:disabled{opacity:.5}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle}
 .toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translate(-50%,-80px);background:var(--ink);color:var(--bg);
-  padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;transition:transform .25s;z-index:20}
-.toast.show{transform:translate(-50%,0)}
+  padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;transition:transform .25s,opacity .25s;z-index:20;opacity:0;pointer-events:none}
+.toast.show{transform:translate(-50%,0);opacity:1}
 .seg3{grid-template-columns:1fr 1fr 1fr}
 .h2row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .h2row h2{margin:0}
@@ -123,6 +123,8 @@ h2{font-size:15px;margin:0 0 12px;font-weight:700}
 .acc .am{font-size:15px;font-weight:700}
 .acc.hid{opacity:.5}
 .tx .a.muted{color:var(--muted)}
+.owed{color:var(--exp)}
+.hint{font-size:13px;color:var(--muted);margin:-4px 0 12px}
 </style>
 </head>
 <body>
@@ -158,6 +160,15 @@ h2{font-size:15px;margin:0 0 12px;font-weight:700}
   </div>
 
   <div class="card">
+    <div class="h2row"><h2>Loans</h2><button class="link" id="addLoan">+ New loan</button></div>
+    <div class="label">Total still owed</div>
+    <div class="big2 owed" id="totalOwed">—</div>
+    <div class="sub" id="loanMonth" style="margin:-6px 0 4px"></div>
+    <div id="loans"></div>
+    <div class="sub" style="margin-top:10px">Tap a loan to match the remaining amount your bank app shows.</div>
+  </div>
+
+  <div class="card">
     <h2>Where it went</h2>
     <div id="cats"></div>
   </div>
@@ -187,11 +198,20 @@ h2{font-size:15px;margin:0 0 12px;font-weight:700}
   </div>
   <div class="amt"><input id="amount" inputmode="decimal" placeholder="0" autocomplete="off"><span>₸</span></div>
   <div id="catWrap"><div class="chips" id="catChips"></div></div>
+  <div id="loanWrap" style="display:none">
+    <div class="label" style="margin-bottom:8px">Which loan</div>
+    <div class="chips" id="loanChips"></div>
+    <label class="field"><span class="label">Principal part of this payment</span>
+      <input id="principal" inputmode="decimal" placeholder="0 ₸" style="margin-top:6px" autocomplete="off"></label>
+    <div class="hint" id="principalHint"></div>
+  </div>
   <div class="label" style="margin-bottom:8px" id="accLabel">Paid from</div>
   <div class="chips" id="accChips"></div>
   <div id="toWrap" style="display:none">
     <div class="label" style="margin-bottom:8px">To</div>
     <div class="chips" id="toChips"></div>
+    <label class="field"><span class="label">Fee (optional, taken from the sending account)</span>
+      <input id="fee" inputmode="decimal" placeholder="0 ₸" style="margin-top:6px" autocomplete="off"></label>
   </div>
   <label class="field"><input id="note" placeholder="Note (optional)" maxlength="120"></label>
   <label class="field"><input id="date" type="date"></label>
@@ -207,7 +227,7 @@ h2{font-size:15px;margin:0 0 12px;font-weight:700}
   <div class="grab"></div>
   <h2 id="balTitle"></h2>
   <div class="sub" id="balNow" style="margin:-6px 0 14px"></div>
-  <div class="label">Balance your bank app shows now</div>
+  <div class="label" id="balLabel">Balance your bank app shows now</div>
   <div class="amt"><input id="balInput" inputmode="decimal" placeholder="0" autocomplete="off"><span>₸</span></div>
   <div class="seg" id="reasonSeg">
     <button data-reason="interest" class="on">Interest earned</button>
@@ -232,7 +252,7 @@ h2{font-size:15px;margin:0 0 12px;font-weight:700}
   <div class="label" style="margin-bottom:8px">Type</div>
   <div class="chips" id="kindChips"></div>
   <div id="startWrap">
-    <div class="label">Current balance</div>
+    <div class="label" id="startLabel">Current balance</div>
     <div class="amt"><input id="accStart" inputmode="decimal" placeholder="0" autocomplete="off"><span>₸</span></div>
   </div>
   <div class="actions">
@@ -285,7 +305,10 @@ const CATS = {
     {id:"selfcare",label:"Cosmetics & self-care",icon:"💄"},
     {id:"clothes",label:"Clothes",icon:"👗"},
     {id:"gifts",label:"Gifts",icon:"🎁"},
+    {id:"work",label:"Work collections",icon:"👥"},
     {id:"mother",label:"Mother",icon:"🤍"},
+    {id:"loans",label:"Loans",icon:"🏦"},
+    {id:"fees",label:"Bank fees",icon:"🧾"},
     {id:"other",label:"Other",icon:"📦"}
   ],
   income: [
@@ -309,7 +332,8 @@ const bankColor = b => (BANKS.find(x=>x.id===b) || BANKS[4]).color;
 const KINDS = [
   {id:"card",label:"Card / current",icon:"💳"},
   {id:"deposit",label:"Deposit",icon:"🏦"},
-  {id:"cash",label:"Cash",icon:"💵"}
+  {id:"cash",label:"Cash",icon:"💵"},
+  {id:"loan",label:"Loan",icon:"📄"}
 ];
 const kindIcon = k => (KINDS.find(x=>x.id===k) || KINDS[0]).icon;
 const DEFAULT_ACCOUNTS = [
@@ -338,7 +362,7 @@ const state = {
   editing: null, type: "expense", cat: "groceries", acc: null, to: null,
   balAcc: null, reason: "interest",
   accEditing: null, accBank: "Kaspi", accKind: "card",
-  showHidden: false
+  showHidden: false, loan: null
 };
 
 /* ---------- storage ---------- */
@@ -359,9 +383,22 @@ function persist(){
 }
 
 /* ---------- helpers ---------- */
+const spendOf = t => t.type === "expense" ? t.amount : t.type === "transfer" ? (Number(t.fee)||0) : 0;
+const spendCat = t => t.type === "transfer" ? "fees" : t.cat;
 const accById = id => state.accounts.find(a=>a.id===id);
 const accLabel = id => { const a = accById(id); if (!a) return "Deleted account"; return a.bank === "Cash" || a.bank === "Other" ? a.name : `${a.bank} · ${a.name}`; };
-const activeAccounts = () => state.accounts.filter(a=>!a.hidden);
+const isLoan = a => a && a.kind === "loan";
+const activeAccounts = () => state.accounts.filter(a=>!a.hidden && !isLoan(a));
+const activeLoans = () => state.accounts.filter(a=>!a.hidden && isLoan(a));
+function owedAll(){
+  const o = {};
+  state.accounts.filter(isLoan).forEach(a => o[a.id] = Number(a.start)||0);
+  state.tx.forEach(t => {
+    if (t.loan && o[t.loan] !== undefined) o[t.loan] -= Number(t.principal)||0;
+    if (t.type === "adjust" && o[t.acc] !== undefined) o[t.acc] += t.amount;
+  });
+  return o;
+}
 function balances(){
   const b = {};
   state.accounts.forEach(a => b[a.id] = Number(a.start)||0);
@@ -369,7 +406,7 @@ function balances(){
     const add = (id, v) => b[id] = (b[id]||0) + v;
     if (t.type === "expense") add(t.acc, -t.amount);
     else if (t.type === "income") add(t.acc, t.amount);
-    else if (t.type === "transfer") { add(t.acc, -t.amount); add(t.to, t.amount); }
+    else if (t.type === "transfer") { add(t.acc, -t.amount - (Number(t.fee)||0)); add(t.to, t.amount); }
     else if (t.type === "adjust") add(t.acc, t.amount);
   });
   return b;
@@ -384,7 +421,7 @@ function render(){
   $("next").style.visibility = isNow ? "hidden" : "visible";
 
   const items = state.tx.filter(t => t.month === state.month);
-  const spent = items.filter(t=>t.type==="expense").reduce((s,t)=>s+t.amount,0);
+  const spent = items.reduce((s,t)=>s+spendOf(t),0);
   const income = items.filter(t=>t.type==="income").reduce((s,t)=>s+t.amount,0);
   $("spent").textContent = money(spent);
   $("income").textContent = money(income);
@@ -412,10 +449,11 @@ function render(){
   }
 
   renderAccounts();
+  renderLoans(items);
 
   // categories
   const byCat = {};
-  items.filter(t=>t.type==="expense").forEach(t => byCat[t.cat] = (byCat[t.cat]||0) + t.amount);
+  items.filter(t=>spendOf(t)>0).forEach(t => byCat[spendCat(t)] = (byCat[spendCat(t)]||0) + spendOf(t));
   const cats = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
   const max = cats.length ? cats[0][1] : 1;
   $("cats").innerHTML = cats.length ? cats.map(([id,v]) => {
@@ -427,7 +465,7 @@ function render(){
 
   // trend
   const months = [...Array(6)].map((_,i)=>shiftMonth(state.month, i-5));
-  const totals = months.map(m => state.tx.filter(t=>t.month===m && t.type==="expense").reduce((s,t)=>s+t.amount,0));
+  const totals = months.map(m => state.tx.filter(t=>t.month===m).reduce((s,t)=>s+spendOf(t),0));
   const tmax = Math.max(1, ...totals);
   $("trend").innerHTML = months.map((m,i)=>`<div class="col ${m===state.month?"sel":""}">
       <div class="v">${totals[i]?short(totals[i]):""}</div>
@@ -438,7 +476,7 @@ function render(){
   const sorted = items.slice().sort((a,b)=> b.date.localeCompare(a.date) || (b.created||0)-(a.created||0));
   if (!sorted.length){ $("list").innerHTML = `<div class="empty">Tap + Add to log your first one.</div>`; return; }
   let html = "", cur = null; const dayTotal = {};
-  sorted.forEach(t => { if (t.type==="expense") dayTotal[t.date]=(dayTotal[t.date]||0)+t.amount; });
+  sorted.forEach(t => { const s = spendOf(t); if (s) dayTotal[t.date]=(dayTotal[t.date]||0)+s; });
   sorted.forEach(t => {
     if (t.date !== cur){
       cur = t.date;
@@ -448,12 +486,13 @@ function render(){
     }
     let icon, title, subline, amt, cls = "";
     if (t.type === "transfer"){
-      icon = "↔️"; title = "Transfer"; subline = `${esc(accLabel(t.acc))} → ${esc(accLabel(t.to))}`; amt = money(t.amount); cls = "muted";
+      icon = "↔️"; title = "Transfer"; subline = `${esc(accLabel(t.acc))} → ${esc(accLabel(t.to))}` + (t.fee ? ` · fee ${money(t.fee)}` : ""); amt = money(t.amount); cls = "muted";
     } else if (t.type === "adjust"){
       icon = "⚖️"; title = "Balance correction"; subline = esc(accLabel(t.acc)); amt = (t.amount>0?"+":"") + money(t.amount); cls = "muted";
     } else {
       const c = CAT_BY_ID[t.cat] || {label:t.cat, icon:"•"};
       icon = c.icon; title = esc(c.label); subline = esc(accLabel(t.acc));
+      if (t.loan) subline += ` → ${esc((accById(t.loan)||{name:"Deleted loan"}).name)}` + (t.principal ? ` · principal ${money(t.principal)}` : "");
       amt = (t.type==="income" ? "+" : "−") + money(t.amount); cls = t.type==="income" ? "inc" : "";
     }
     if (t.note) subline += " · " + esc(t.note);
@@ -466,7 +505,7 @@ function render(){
 
 function renderAccounts(){
   const b = balances();
-  const shown = state.accounts.filter(a => state.showHidden || !a.hidden);
+  const shown = state.accounts.filter(a => !isLoan(a) && (state.showHidden || !a.hidden));
   const total = activeAccounts().reduce((s,a)=>s+(b[a.id]||0),0);
   $("netWorth").textContent = money(total);
   const order = BANKS.map(x=>x.id);
@@ -479,10 +518,33 @@ function renderAccounts(){
         <span class="ic">${kindIcon(a.kind)}</span><span class="nm">${esc(a.name)}${a.hidden?" <small>(hidden)</small>":""}</span>
         <span class="am ${(b[a.id]||0)<0?"exp":""}">${money(b[a.id]||0)}</span></button>`).join("") + `</div>`;
   }).join("");
-  const hiddenCount = state.accounts.filter(a=>a.hidden).length;
+  const hiddenCount = state.accounts.filter(a=>a.hidden && !isLoan(a)).length;
   if (hiddenCount) html += `<button class="link" id="toggleHidden" style="margin-top:6px">${state.showHidden?"Hide":"Show"} hidden accounts (${hiddenCount})</button>`;
   $("accs").innerHTML = html || `<div class="empty">No accounts yet.</div>`;
   const th = $("toggleHidden"); if (th) th.onclick = () => { state.showHidden = !state.showHidden; render(); };
+}
+
+function renderLoans(items){
+  const o = owedAll();
+  const shown = state.accounts.filter(a => isLoan(a) && (state.showHidden || !a.hidden));
+  $("totalOwed").textContent = money(activeLoans().reduce((s,a)=>s+(o[a.id]||0),0));
+  const pays = items.filter(t=>t.loan);
+  const paid = pays.reduce((s,t)=>s+t.amount,0), princ = pays.reduce((s,t)=>s+(Number(t.principal)||0),0);
+  $("loanMonth").textContent = paid ? `Paid this month: ${money(paid)} (principal ${money(princ)}, interest & fees ${money(paid-princ)})` : "";
+  const order = BANKS.map(x=>x.id);
+  const banks = [...new Set(shown.map(a=>a.bank))].sort((x,y)=>order.indexOf(x)-order.indexOf(y));
+  let html = banks.map(bank => {
+    const list = shown.filter(a=>a.bank===bank);
+    const sub = list.filter(a=>!a.hidden).reduce((s,a)=>s+(o[a.id]||0),0);
+    return `<div class="bank"><div class="bankhead"><span><span class="dot" style="background:${bankColor(bank)}"></span> ${esc(bank)}</span><span>${money(sub)}</span></div>` +
+      list.map(a => `<button class="acc ${a.hidden?"hid":""}" data-acc="${esc(a.id)}">
+        <span class="ic">📄</span><span class="nm">${esc(a.name)}${a.hidden?" <small>(hidden)</small>":""}</span>
+        <span class="am owed">${money(o[a.id]||0)}</span></button>`).join("") + `</div>`;
+  }).join("");
+  const hiddenCount = state.accounts.filter(a=>a.hidden && isLoan(a)).length;
+  if (hiddenCount) html += `<button class="link" id="toggleHiddenLoans" style="margin-top:6px">${state.showHidden?"Hide":"Show"} hidden loans (${hiddenCount})</button>`;
+  $("loans").innerHTML = html || `<div class="empty">No loans added yet.</div>`;
+  const th = $("toggleHiddenLoans"); if (th) th.onclick = () => { state.showHidden = !state.showHidden; render(); };
 }
 
 /* ---------- sheets ---------- */
@@ -503,8 +565,25 @@ function renderTxSheet(){
     `<button class="chip ${c.id===state.cat?"on":""}" data-cat="${c.id}">${c.icon} ${esc(c.label)}</button>`).join("");
   $("accChips").innerHTML = accChipHtml(state.acc, "acc");
   if (isT) $("toChips").innerHTML = accChipHtml(state.to, "to", state.acc);
+  const isLoanPay = state.type === "expense" && state.cat === "loans";
+  $("loanWrap").style.display = isLoanPay ? "" : "none";
+  if (isLoanPay) {
+    const loans = activeLoans();
+    $("loanChips").innerHTML = loans.length ? loans.map(a =>
+      `<button class="chip ${a.id===state.loan?"on":""}" data-loan="${esc(a.id)}"><span class="dot" style="background:${bankColor(a.bank)}"></span> ${esc(accLabel(a.id))}</button>`).join("")
+      : `<div class="sub">Add your loans first with “+ New loan” on the main screen.</div>`;
+    renderPrincipalHint();
+  }
   document.querySelectorAll("#typeSeg button").forEach(b => b.classList.toggle("on", b.dataset.type===state.type));
 }
+function renderPrincipalHint(){
+  const amt = parseNum($("amount").value), pr = parseNum($("principal").value);
+  if (amt > 0 && pr >= 0 && !isNaN(pr)) $("principalHint").textContent = pr > amt ? "Principal can't be more than the payment." : `Interest & fees: ${money(amt - pr)}. Remaining loan goes down by ${money(pr)}.`;
+  else $("principalHint").textContent = "";
+}
+$("amount").addEventListener("input", () => { if (state.cat === "loans") renderPrincipalHint(); });
+$("principal").oninput = renderPrincipalHint;
+$("loanChips").onclick = e => { const b = e.target.closest(".chip"); if(!b) return; state.loan = b.dataset.loan; renderTxSheet(); };
 $("catChips").onclick = e => { const b = e.target.closest(".chip"); if(!b) return; state.cat = b.dataset.cat; renderTxSheet(); };
 $("accChips").onclick = e => { const b = e.target.closest(".chip"); if(!b) return; state.acc = b.dataset.acc; if (state.to===state.acc) state.to=null; renderTxSheet(); };
 $("toChips").onclick = e => { const b = e.target.closest(".chip"); if(!b) return; state.to = b.dataset.to; renderTxSheet(); };
@@ -533,6 +612,9 @@ function openTx(t){
   state.to = t ? (t.to || null) : null;
   $("amount").value = t ? String(t.amount) : "";
   $("note").value = t ? (t.note||"") : "";
+  $("fee").value = t && t.fee ? String(t.fee) : "";
+  $("principal").value = t && t.principal ? String(t.principal) : "";
+  state.loan = t && t.loan ? t.loan : (lastUsed("loan", x=>!!x.loan) || (activeLoans()[0]||{}).id || null);
   const today = todayStr();
   $("date").value = t ? t.date : (state.month === monthOf(today) ? today : state.month + "-01");
   $("delBtn").style.display = t ? "" : "none";
@@ -553,7 +635,16 @@ $("saveBtn").onclick = () => {
   const existing = state.editing ? state.tx.find(x=>x.id===state.editing) : null;
   const body = { amount: Math.round(amount*100)/100, type: state.type, acc: state.acc,
     note: $("note").value.trim(), date, month: monthOf(date), created: existing?.created || Date.now() };
-  if (state.type === "transfer") { body.to = state.to; body.cat = null; } else { body.cat = state.cat; body.to = null; }
+  if (state.type === "transfer") {
+    const fee = parseNum($("fee").value);
+    body.to = state.to; body.cat = null; body.fee = fee > 0 ? Math.round(fee*100)/100 : 0;
+  } else { body.cat = state.cat; body.to = null; body.fee = 0; }
+  body.loan = null; body.principal = 0;
+  if (state.type === "expense" && state.cat === "loans" && state.loan) {
+    const pr = parseNum($("principal").value);
+    if (pr > amount) { toast("Principal can't be more than the payment"); return; }
+    body.loan = state.loan; body.principal = pr > 0 ? Math.round(pr*100)/100 : 0;
+  }
   closeSheet();
   if (existing) Object.assign(existing, body); else state.tx.push({ id: newId(), ...body });
   if (persist()) toast(existing ? "Updated" : "Saved");
@@ -570,12 +661,17 @@ $("confirmYes").onclick = () => {
 
 /* ---------- update balance ---------- */
 $("accs").addEventListener("click", e => { const b = e.target.closest(".acc"); if (b) openBal(b.dataset.acc); });
+$("loans").addEventListener("click", e => { const b = e.target.closest(".acc"); if (b) openBal(b.dataset.acc); });
+$("addLoan").onclick = () => openAccForm(null, "loan");
 function openBal(id){
   const a = accById(id); if (!a) return;
   state.balAcc = id;
+  const loan = isLoan(a);
   state.reason = a.kind === "deposit" ? "interest" : "correction";
   $("balTitle").textContent = accLabel(id);
-  $("balNow").textContent = `In this app: ${money(balances()[id]||0)}`;
+  $("balNow").textContent = loan ? `Still owed in this app: ${money(owedAll()[id]||0)}` : `In this app: ${money(balances()[id]||0)}`;
+  $("balLabel").textContent = loan ? "Remaining amount your bank app shows" : "Balance your bank app shows now";
+  $("reasonSeg").style.display = loan ? "none" : "";
   $("balInput").value = "";
   $("balDate").value = todayStr();
   renderBal();
@@ -585,7 +681,13 @@ function openBal(id){
 function renderBal(){
   document.querySelectorAll("#reasonSeg button").forEach(b => b.classList.toggle("on", b.dataset.reason===state.reason));
   const v = parseNum($("balInput").value);
-  const cur = balances()[state.balAcc]||0;
+  const cur = curBal();
+  if (isLoan(accById(state.balAcc))) {
+    if (isNaN(v)) { $("balDiff").textContent = "Fixes the remaining amount (e.g. after early repayment or a missed entry)."; return; }
+    const d = Math.round((v - cur)*100)/100;
+    $("balDiff").innerHTML = d === 0 ? "Already matches — nothing to change." : `Remaining will change by <b>${d>0?"+":""}${money(d)}</b>.`;
+    return;
+  }
   if (isNaN(v)) { $("balDiff").textContent = state.reason==="interest" ? "The increase will be logged as deposit interest (income)." : "Fixes the balance without counting as income or spending."; return; }
   const d = Math.round((v - cur)*100)/100;
   if (d === 0) $("balDiff").textContent = "Already matches — nothing to change.";
@@ -593,6 +695,7 @@ function renderBal(){
   else if (state.reason === "interest") $("balDiff").innerHTML = `Balance went down by <b class="exp">${money(-d)}</b> — that can't be interest. Switch to Correction, or log the withdrawal as a transfer or expense.`;
   else $("balDiff").innerHTML = `Balance will change by <b>${d>0?"+":""}${money(d)}</b> (not counted as income or spending).`;
 }
+const curBal = () => isLoan(accById(state.balAcc)) ? (owedAll()[state.balAcc]||0) : (balances()[state.balAcc]||0);
 $("balInput").oninput = renderBal;
 document.querySelectorAll("#reasonSeg button").forEach(b => b.onclick = () => { state.reason = b.dataset.reason; renderBal(); });
 $("balCancel").onclick = closeSheet;
@@ -600,9 +703,10 @@ $("balEdit").onclick = () => openAccForm(state.balAcc);
 $("balSave").onclick = () => {
   const v = parseNum($("balInput").value);
   if (isNaN(v)) { toast("Enter the balance"); $("balInput").focus(); return; }
-  const cur = balances()[state.balAcc]||0;
+  const cur = curBal();
   const d = Math.round((v - cur)*100)/100;
   if (d === 0) { closeSheet(); toast("Already up to date"); return; }
+  if (isLoan(accById(state.balAcc))) state.reason = "correction";
   if (state.reason === "interest" && d < 0) { toast("Use Correction for a decrease"); return; }
   const date = $("balDate").value || todayStr();
   const base = { id: newId(), acc: state.balAcc, date, month: monthOf(date), created: Date.now(), to: null };
@@ -614,12 +718,13 @@ $("balSave").onclick = () => {
 
 /* ---------- account form ---------- */
 $("addAcc").onclick = () => openAccForm(null);
-function openAccForm(id){
+function openAccForm(id, kind){
   const a = id ? accById(id) : null;
   state.accEditing = id;
   state.accBank = a ? a.bank : "Kaspi";
-  state.accKind = a ? a.kind : "deposit";
-  $("accTitle").textContent = a ? "Edit account" : "New account";
+  state.accKind = a ? a.kind : (kind || "deposit");
+  const loan = state.accKind === "loan";
+  $("accTitle").textContent = a ? (loan ? "Edit loan" : "Edit account") : (loan ? "New loan" : "New account");
   $("accName").value = a ? a.name : "";
   $("accStart").value = "";
   $("startWrap").style.display = a ? "none" : "";
@@ -629,6 +734,9 @@ function openAccForm(id){
   openSheet($("accSheet"));
 }
 function renderAccForm(){
+  const loan = state.accKind === "loan";
+  $("startLabel").textContent = loan ? "Amount still owed" : "Current balance";
+  $("accName").placeholder = loan ? "Name, e.g. Mortgage, Car loan" : "Name, e.g. Kaspi Deposit, Gold card";
   $("bankChips").innerHTML = BANKS.map(b => `<button class="chip ${b.id===state.accBank?"on":""}" data-bank="${b.id}"><span class="dot" style="background:${b.color}"></span> ${b.id}</button>`).join("");
   $("kindChips").innerHTML = KINDS.map(k => `<button class="chip ${k.id===state.accKind?"on":""}" data-kind="${k.id}">${k.icon} ${k.label}</button>`).join("");
 }
@@ -636,7 +744,7 @@ $("bankChips").onclick = e => { const b = e.target.closest(".chip"); if(!b) retu
 $("kindChips").onclick = e => { const b = e.target.closest(".chip"); if(!b) return; state.accKind = b.dataset.kind; renderAccForm(); };
 $("accCancel").onclick = closeSheet;
 $("accSave").onclick = () => {
-  const name = $("accName").value.trim() || (state.accKind==="deposit" ? "Deposit" : state.accKind==="cash" ? "Cash" : "Card");
+  const name = $("accName").value.trim() || (state.accKind==="deposit" ? "Deposit" : state.accKind==="cash" ? "Cash" : state.accKind==="loan" ? "Loan" : "Card");
   if (state.accEditing){
     const a = accById(state.accEditing);
     Object.assign(a, {name, bank: state.accBank, kind: state.accKind});
@@ -644,7 +752,7 @@ $("accSave").onclick = () => {
   } else {
     const start = parseNum($("accStart").value);
     state.accounts.push({ id: newId(), bank: state.accBank, name, kind: state.accKind, start: isNaN(start) ? 0 : Math.round(start*100)/100 });
-    toast("Account added");
+    toast(state.accKind === "loan" ? "Loan added" : "Account added");
   }
   closeSheet(); persist(); render();
 };
@@ -657,7 +765,7 @@ $("accHide").onclick = () => {
 /* ---------- settings & backup ---------- */
 $("openSettings").onclick = () => {
   $("budgetInput").value = state.budget ? nf.format(state.budget) : "";
-  $("backupInfo").textContent = `${state.tx.length} entries and ${state.accounts.length} accounts saved on this phone. ` +
+  $("backupInfo").textContent = `${state.tx.length} entries, ${state.accounts.filter(a=>!isLoan(a)).length} accounts and ${state.accounts.filter(isLoan).length} loans saved on this phone. ` +
     (state.lastBackup ? `Last backup: ${new Date(state.lastBackup).toLocaleDateString("en-GB")}.` : "No backup yet.");
   openSheet($("setSheet"));
 };
@@ -704,8 +812,8 @@ $("csvBtn").onclick = () => {
   const rows = state.tx.filter(t=>t.month===state.month).sort((a,b)=>a.date.localeCompare(b.date));
   const q = s => `"${String(s ?? "").replace(/"/g,'""')}"`;
   const catName = t => t.type==="transfer" ? "Transfer" : t.type==="adjust" ? "Balance correction" : ((CAT_BY_ID[t.cat]||{}).label||t.cat);
-  const csv = ["date,type,category,account,to_account,amount,note",
-    ...rows.map(t=>[t.date,t.type,q(catName(t)),q(accLabel(t.acc)),q(t.to?accLabel(t.to):""),t.amount,q(t.note)].join(","))].join("\n");
+  const csv = ["date,type,category,account,to_account,amount,fee,loan,principal,note",
+    ...rows.map(t=>[t.date,t.type,q(catName(t)),q(accLabel(t.acc)),q(t.to?accLabel(t.to):""),t.amount,t.fee||0,q(t.loan?accLabel(t.loan):""),t.principal||0,q(t.note)].join(","))].join("\n");
   shareOrDownload(`my-money-${state.month}.csv`, "﻿"+csv, "text/csv");
 };
 
