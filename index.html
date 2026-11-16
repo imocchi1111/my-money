@@ -266,7 +266,8 @@ h2{font-size:15px;margin:0 0 12px;font-weight:700}
 <div class="sheet" id="setSheet" role="dialog" aria-label="Settings">
   <div class="grab"></div>
   <h2>Settings</h2>
-  <label class="field"><span class="label">Monthly spending limit (₸)</span>
+  <label class="field"><span class="label">Monthly limit for everyday spending (₸)</span>
+    <span class="sub" style="display:block;margin-top:4px">Loans, utilities and internet don't count toward it.</span>
     <input id="budgetInput" inputmode="numeric" placeholder="e.g. 400 000" style="margin-top:6px"></label>
   <div class="actions" style="margin-bottom:12px">
     <button class="btn" id="saveSettings">Save limit</button>
@@ -384,6 +385,7 @@ function persist(){
 
 /* ---------- helpers ---------- */
 const spendOf = t => t.type === "expense" ? t.amount : t.type === "transfer" ? (Number(t.fee)||0) : 0;
+const FIXED = new Set(["loans","utilities","internet"]);
 const spendCat = t => t.type === "transfer" ? "fees" : t.cat;
 const accById = id => state.accounts.find(a=>a.id===id);
 const accLabel = id => { const a = accById(id); if (!a) return "Deleted account"; return a.bank === "Cash" || a.bank === "Other" ? a.name : `${a.bank} · ${a.name}`; };
@@ -422,6 +424,8 @@ function render(){
 
   const items = state.tx.filter(t => t.month === state.month);
   const spent = items.reduce((s,t)=>s+spendOf(t),0);
+  const fixed = items.filter(t=>FIXED.has(spendCat(t))).reduce((s,t)=>s+spendOf(t),0);
+  const everyday = spent - fixed;
   const income = items.filter(t=>t.type==="income").reduce((s,t)=>s+t.amount,0);
   $("spent").textContent = money(spent);
   $("income").textContent = money(income);
@@ -431,21 +435,21 @@ function render(){
 
   const bar = $("budgetBar"), bt = $("budgetText");
   if (state.budget > 0){
-    const p = spent / state.budget;
+    const p = everyday / state.budget;
     bar.style.display = "";
     bar.firstElementChild.style.width = Math.min(100, p*100) + "%";
     bar.className = "bar" + (p > 1 ? " over" : p > .85 ? " near" : "");
-    const left = state.budget - spent;
-    let txt = left >= 0 ? `${money(left)} left of ${money(state.budget)}` : `${money(-left)} over your ${money(state.budget)} limit`;
+    const left = state.budget - everyday;
+    let txt = left >= 0 ? `Everyday: ${money(left)} left of ${money(state.budget)}` : `Everyday: ${money(-left)} over your ${money(state.budget)} limit`;
     if (isNow && left > 0){
       const d = new Date(); const dim = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
       const daysLeft = dim - d.getDate() + 1;
       txt += ` · ~${money(left/daysLeft)}/day for ${daysLeft} day${daysLeft>1?"s":""}`;
     }
-    bt.textContent = txt;
+    bt.textContent = txt + (fixed ? ` · Fixed bills & loans: ${money(fixed)}` : "");
   } else {
     bar.style.display = "none";
-    bt.textContent = "Set a monthly limit in ⚙︎ to track how much is left.";
+    bt.textContent = (fixed ? `Everyday ${money(everyday)} · Fixed bills & loans ${money(fixed)}. ` : "") + "Set an everyday limit in ⚙︎ to track how much is left.";
   }
 
   renderAccounts();
