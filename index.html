@@ -8,57 +8,61 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="My Money">
-<meta name="theme-color" content="#f5f3ee">
+<meta name="theme-color" content="#fbf7f2">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f5f3ee; --card:#ffffff; --ink:#1d1c1a; --muted:#7a766e; --line:#e7e3da;
-  --accent:#1f6f5c; --accent-soft:#e3efe9; --exp:#c2553a; --exp-soft:#f6e6e1; --inc:#1f6f5c;
-  --warn:#c8902a; --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.05);
-}
-@media (prefers-color-scheme:dark){
-  :root{--bg:#141413;--card:#1e1e1c;--ink:#f1efe9;--muted:#9b978e;--line:#2e2d2a;
-  --accent:#5cbf9f;--accent-soft:#1f3530;--exp:#e98a70;--exp-soft:#3a2520;--inc:#5cbf9f;--warn:#e0b25a;
-  --shadow:0 1px 2px rgba(0,0,0,.3)}
+  --bg:#fbf7f2; --card:#ffffff; --ink:#3a3644; --muted:#8b8697; --line:#efe9e2;
+  --accent:#7c6fd6; --accent-soft:#ece8fc; --exp:#de7562; --exp-soft:#fde7e1; --inc:#3c9f84;
+  --warn:#e0a84a; --shadow:0 1px 2px rgba(80,60,120,.04),0 6px 20px rgba(80,60,120,.07);
+  --mint:#d4f1e4; --peach:#ffe2d3; --lav:#e6e0fb; --sky:#d9ecfb; --butter:#fff3c9; --pink:#fbdde8;
+  color-scheme: light;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,sans-serif}
-body{padding:calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + 100px)}
+body{padding:calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + 170px)}
 .wrap{max-width:560px;margin:0 auto}
+[hidden]{display:none!important}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
-input,select{font:inherit;color:var(--ink)}
+input,select,textarea{font:inherit;color:var(--ink)}
 .top{display:flex;align-items:center;justify-content:space-between;margin:4px 0 14px}
 .monthnav{display:flex;align-items:center;gap:4px}
 .monthnav button{width:36px;height:36px;border-radius:50%;font-size:20px;color:var(--muted)}
 .monthnav button:active{background:var(--line)}
 .monthlabel{font-weight:700;font-size:18px;min-width:150px;text-align:center}
 .iconbtn{width:40px;height:40px;border-radius:12px;background:var(--card);box-shadow:var(--shadow);font-size:18px}
-.card{background:var(--card);border-radius:20px;padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.card{background:var(--card);border-radius:22px;padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
 .label{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .big{font-size:34px;font-weight:800;letter-spacing:-.02em;margin:4px 0 2px}
+.big2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:2px 0 10px}
 .row3{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .mini{background:var(--bg);border-radius:14px;padding:10px 12px}
 .mini b{display:block;font-size:17px;margin-top:2px}
-.inc{color:var(--inc)} .exp{color:var(--exp)}
+.inc{color:var(--inc)} .exp{color:var(--exp)} .owed{color:var(--exp)}
 .bar{height:8px;border-radius:8px;background:var(--line);overflow:hidden;margin-top:12px}
 .bar i{display:block;height:100%;border-radius:8px;background:var(--accent);transition:width .3s}
 .bar.over i{background:var(--exp)} .bar.near i{background:var(--warn)}
 .sub{font-size:13px;color:var(--muted);margin-top:6px}
+.hint{font-size:13px;color:var(--muted);margin:-4px 0 12px}
 h2{font-size:15px;margin:0 0 12px;font-weight:700}
+.h2row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px}
+.h2row h2{margin:0}
+.link{color:var(--accent);font-weight:700;font-size:14px;padding:6px 0}
 .cat{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:10px;padding:7px 0}
 .cat .ic{font-size:18px;text-align:center}
 .cat .nm{font-size:14px;font-weight:600}
 .cat .cb{height:5px;border-radius:5px;background:var(--line);margin-top:5px;overflow:hidden}
-.cat .cb i{display:block;height:100%;background:var(--exp);border-radius:5px;opacity:.8}
-.cat .am{font-size:14px;font-weight:700;text-align:right}
+.cat .cb i{display:block;height:100%;background:var(--exp);border-radius:5px;opacity:.75}
+.cat .am{font-size:14px;font-weight:700;text-align:right;white-space:nowrap}
 .cat .pc{font-size:11px;color:var(--muted);font-weight:500}
 .trend{display:flex;align-items:flex-end;gap:8px;height:110px;padding-top:6px}
 .trend .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px}
 .trend .b{width:100%;max-width:36px;border-radius:8px 8px 4px 4px;background:var(--exp-soft);min-height:3px}
 .trend .col.sel .b{background:var(--exp)}
+.trend.lav .b{background:var(--lav)} .trend.lav .col.sel .b{background:var(--accent)}
 .trend .m{font-size:11px;color:var(--muted);font-weight:600}
 .trend .v{font-size:10px;color:var(--muted)}
 .day{font-size:12px;font-weight:700;color:var(--muted);margin:14px 0 4px;display:flex;justify-content:space-between}
@@ -67,27 +71,43 @@ h2{font-size:15px;margin:0 0 12px;font-weight:700}
 .tx:last-child{border-bottom:0}
 .tx .ic{width:38px;height:38px;border-radius:12px;background:var(--bg);display:grid;place-items:center;font-size:18px}
 .tx .t{font-size:14px;font-weight:600}
-.tx .n{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
-.tx .a{font-weight:700;font-size:15px;white-space:nowrap}
+.tx .n{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tx > div:nth-child(2){min-width:0}
-.acc .am,.cat .am{white-space:nowrap}
+.tx .a{font-weight:700;font-size:15px;white-space:nowrap}
+.tx .a.muted{color:var(--muted)}
 .empty{color:var(--muted);font-size:14px;text-align:center;padding:16px 0}
-.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom) + 20px);
-  background:var(--accent);color:#fff;font-weight:700;font-size:16px;padding:16px 28px;border-radius:999px;
-  box-shadow:0 8px 24px rgba(31,111,92,.35);display:flex;gap:8px;align-items:center;z-index:5}
-@media (prefers-color-scheme:dark){.fab{color:#0f1f1a}}
-.notice{font-size:13px;padding:10px 14px;border-radius:12px;background:var(--exp-soft);color:var(--ink);margin-bottom:12px;display:none}
+.bank{margin-top:10px}
+.bankhead{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--line)}
+.acc{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;width:100%;text-align:left;padding:10px 0;border-bottom:1px solid var(--line)}
+.acc:last-child{border-bottom:0}
+.acc .ic{font-size:17px;text-align:center}
+.acc .nm{font-size:14px;font-weight:600}
+.acc .am{font-size:15px;font-weight:700;white-space:nowrap}
+.acc.hid{opacity:.5}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle}
+.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom) + 84px);
+  background:linear-gradient(135deg,#8f83e6,#7c6fd6);color:#fff;font-weight:700;font-size:16px;padding:15px 28px;border-radius:999px;
+  box-shadow:0 8px 24px rgba(124,111,214,.35);display:flex;gap:8px;align-items:center;z-index:5}
+.notice{font-size:13px;padding:10px 14px;border-radius:12px;background:var(--exp-soft);margin-bottom:12px;display:none}
 .notice.show{display:block}
-/* sheet */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
+/* tab bar */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:6;display:flex;justify-content:center;gap:4px;
+  padding:6px 10px calc(env(safe-area-inset-bottom) + 8px);background:rgba(255,255,255,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+.tabbar button{flex:1;max-width:140px;padding:6px 4px;border-radius:14px;font-weight:700;color:var(--muted);font-size:12px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.tabbar button span{font-size:20px;line-height:1.2}
+.tabbar button.on{background:var(--accent-soft);color:var(--accent)}
+/* sheets */
+.overlay{position:fixed;inset:0;background:rgba(60,50,80,.28);opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
 .overlay.open{opacity:1;pointer-events:auto}
 .sheet{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-radius:24px 24px 0 0;
-  padding:10px 18px calc(env(safe-area-inset-bottom) + 18px);transform:translateY(105%);transition:transform .25s ease;
+  padding:10px 18px calc(env(safe-area-inset-bottom) + 18px);transform:translateY(105%);
   z-index:11;max-height:92vh;overflow:auto;max-width:600px;margin:0 auto;visibility:hidden;transition:transform .25s ease,visibility 0s .25s}
 .sheet.open{transform:none;visibility:visible;transition:transform .25s ease}
 .grab{width:40px;height:5px;border-radius:5px;background:var(--line);margin:0 auto 12px}
 .seg{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-radius:14px;padding:4px;margin-bottom:14px}
-.seg button{padding:10px;border-radius:11px;font-weight:700;color:var(--muted)}
+.seg3{grid-template-columns:1fr 1fr 1fr}
+.seg4{grid-template-columns:repeat(4,1fr)}
+.seg button{padding:10px 4px;border-radius:11px;font-weight:700;color:var(--muted);font-size:14px}
 .seg button.on{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
 .amt{display:flex;align-items:baseline;gap:6px;border-bottom:2px solid var(--line);padding:6px 0;margin-bottom:14px}
 .amt:focus-within{border-color:var(--accent)}
@@ -97,38 +117,99 @@ h2{font-size:15px;margin:0 0 12px;font-weight:700}
 .chip{padding:8px 12px;border-radius:999px;background:var(--bg);font-size:13px;font-weight:600;border:1.5px solid transparent}
 .chip.on{border-color:var(--accent);background:var(--accent-soft)}
 .field{display:block;margin-bottom:12px}
-.field input{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);outline:none}
-.field input:focus{border-color:var(--accent)}
+.field input,.field textarea,.field select{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);outline:none}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
 .actions{display:flex;gap:10px;margin-top:6px}
 .btn{flex:1;padding:14px;border-radius:14px;font-weight:700;background:var(--accent);color:#fff}
-@media (prefers-color-scheme:dark){.btn{color:#0f1f1a}}
 .btn.ghost{background:var(--bg);color:var(--ink)}
 .btn.danger{background:var(--exp-soft);color:var(--exp);flex:0 0 auto;padding:14px 18px}
+.btn.small{padding:10px 12px;font-size:14px;flex:0 0 auto}
 .btn:disabled{opacity:.5}
-.dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle}
-.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translate(-50%,-80px);background:var(--ink);color:var(--bg);
-  padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;transition:transform .25s,opacity .25s;z-index:20;opacity:0;pointer-events:none}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translate(-50%,-80px);background:var(--ink);color:#fff;
+  padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;transition:transform .25s,opacity .25s;z-index:20;opacity:0;pointer-events:none;max-width:90vw;text-align:center}
 .toast.show{transform:translate(-50%,0);opacity:1}
-.seg3{grid-template-columns:1fr 1fr 1fr}
-.h2row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.h2row h2{margin:0}
-.link{color:var(--accent);font-weight:700;font-size:14px;padding:6px 0}
-.big2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:2px 0 10px}
-.bank{margin-top:10px}
-.bankhead{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--line)}
-.acc{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;width:100%;text-align:left;padding:10px 0;border-bottom:1px solid var(--line)}
-.acc:last-child{border-bottom:0}
-.acc .ic{font-size:17px;text-align:center}
-.acc .nm{font-size:14px;font-weight:600}
-.acc .am{font-size:15px;font-weight:700}
-.acc.hid{opacity:.5}
-.tx .a.muted{color:var(--muted)}
-.owed{color:var(--exp)}
-.hint{font-size:13px;color:var(--muted);margin:-4px 0 12px}
+
+/* ---------- life ---------- */
+.lifetop{display:flex;align-items:center;justify-content:space-between;margin:4px 0 12px}
+.hello{font-size:22px;font-weight:800;letter-spacing:-.01em}
+.daynav{display:flex;align-items:center;justify-content:center;gap:6px;margin:-4px 0 12px}
+.daynav button{width:34px;height:34px;border-radius:50%;font-size:20px;color:var(--muted)}
+.daynav b{min-width:150px;text-align:center;font-size:15px}
+.moodrow{display:flex;justify-content:space-between;gap:6px;margin:6px 0 12px}
+.moodrow button{flex:1;aspect-ratio:1;max-width:58px;border-radius:16px;background:var(--bg);font-size:26px;border:2px solid transparent;transition:transform .15s}
+.moodrow button.on{border-color:var(--accent);transform:scale(1.06)}
+.energy button{font-size:14px;font-weight:800;color:var(--muted)}
+.energy button.on{color:var(--ink)}
+.catcard{border-radius:22px;padding:14px 14px 6px;margin-bottom:14px;box-shadow:var(--shadow);background:var(--card)}
+.cathead{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;margin:0 2px 8px}
+.cathead .pill{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;margin-left:auto}
+.hrow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:10px 10px;border-radius:16px;margin-bottom:8px;background:var(--bg)}
+.hrow .hname{text-align:left;min-width:0}
+.hrow .hname b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hrow .hname small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.hrow .hb{grid-column:1/-1;height:5px;border-radius:5px;background:rgba(0,0,0,.05);overflow:hidden}
+.hrow .hb i{display:block;height:100%;border-radius:5px}
+.hctl{display:flex;gap:6px}
+.round{width:40px;height:40px;border-radius:50%;background:var(--card);font-size:18px;font-weight:800;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.round.plus{background:var(--accent);color:#fff}
+.round.live{background:var(--exp);color:#fff}
+.hrow.done .hname b::after{content:" ✓";color:var(--inc)}
+.timerbar{display:flex;align-items:center;gap:10px;background:var(--lav);border-radius:18px;padding:12px 14px;margin-bottom:14px}
+.timerbar b{font-size:20px;font-variant-numeric:tabular-nums}
+.timerbar .grow{flex:1;min-width:0}
+.timerbar small{display:block;color:var(--muted);font-size:12px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--bg);border-radius:16px;padding:12px}
+.stat .label{font-size:11px}
+.stat b{display:block;font-size:20px;margin-top:3px;font-weight:800}
+.stat small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.goal{border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);background:var(--card)}
+.goal .gtop{display:flex;align-items:center;gap:10px}
+.goal .gic{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:22px}
+.goal .gname{font-weight:800;font-size:16px;flex:1;min-width:0}
+.goal .gpct{font-weight:800;font-size:18px}
+.goal .bar{height:10px}
+.ms{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);width:100%;text-align:left;font-size:14px}
+.ms:last-child{border-bottom:0}
+.ms .box{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;flex:0 0 auto}
+.ms.done .box{background:var(--inc);border-color:var(--inc);color:#fff}
+.ms.done span{color:var(--muted);text-decoration:line-through}
+.mini-chip{display:inline-block;font-size:12px;font-weight:600;padding:4px 9px;border-radius:999px;background:var(--bg);margin:6px 6px 0 0}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal .dh{font-size:10px;color:var(--muted);text-align:center;font-weight:700}
+.cal .c{aspect-ratio:1;border-radius:9px;background:var(--bg);display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--muted)}
+.cal .c.has{color:var(--ink)}
+.cal .c.today{outline:2px solid var(--accent)}
+.yr{display:grid;grid-template-columns:28px repeat(31,1fr);gap:2px;align-items:center}
+.yr span{font-size:9px;color:var(--muted);font-weight:700}
+.yr i{display:block;aspect-ratio:1;border-radius:2px;background:var(--bg)}
+.legend{display:flex;gap:8px;justify-content:center;margin-top:10px;font-size:12px;color:var(--muted);align-items:center}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:3px;vertical-align:-2px}
+.ins{padding:10px 12px;border-radius:14px;background:var(--bg);margin-bottom:8px;font-size:14px;line-height:1.4}
+.rrow{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center;width:100%;text-align:left;padding:10px 0;border-bottom:1px solid var(--line)}
+.rrow:last-child{border-bottom:0}
+.rrow .nm{font-weight:700;font-size:14px}
+.rrow .rb{height:6px;border-radius:6px;background:var(--line);overflow:hidden;margin-top:5px}
+.rrow .rb i{display:block;height:100%;border-radius:6px;background:var(--accent)}
+.rrow .pct{font-weight:800;font-size:14px}
+.entry{display:flex;gap:10px;padding:7px 0;font-size:14px;border-bottom:1px solid var(--line)}
+.entry:last-child{border-bottom:0}
+.entry .ei{width:26px;text-align:center;flex:0 0 auto}
+.entry .et{flex:1;min-width:0}
+.entry .ev{color:var(--muted);white-space:nowrap;font-weight:600}
+.manrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:11px 4px;border-bottom:1px solid var(--line)}
+.manrow small{color:var(--muted);margin-left:auto;font-size:12px;white-space:nowrap}
+.mancat{display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:10px 12px;border-radius:14px;margin-top:14px;font-weight:800}
+.mancat small{margin-left:auto;font-weight:600;font-size:12px;opacity:.7}
+.colors{display:flex;gap:10px;margin-bottom:14px}
+.colors button{width:38px;height:38px;border-radius:50%;border:3px solid transparent}
+.colors button.on{border-color:var(--ink)}
+.svgwrap{width:100%;overflow:hidden}
+textarea{resize:vertical}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="moneyView">
   <div class="top">
     <div class="monthnav">
       <button id="prev" aria-label="Previous month">‹</button>
@@ -183,6 +264,325 @@ h2{font-size:15px;margin:0 0 12px;font-weight:700}
     <div id="list"></div>
   </div>
 </div>
+
+<div id="lifeView" class="wrap" hidden>
+  <div class="lifetop">
+    <div class="hello" id="hello">Hello</div>
+    <button class="iconbtn" id="openSettings2" aria-label="Settings">⚙︎</button>
+  </div>
+  <div class="seg seg4" id="lifeSeg">
+    <button data-v="today" class="on">Today</button>
+    <button data-v="goals">Goals</button>
+    <button data-v="social">People</button>
+    <button data-v="review">Review</button>
+  </div>
+
+  <!-- TODAY -->
+  <div id="lv-today">
+    <div class="daynav"><button id="dPrev">‹</button><b id="dLabel">Today</b><button id="dNext">›</button></div>
+    <div id="timerBox"></div>
+    <div class="card">
+      <h2>How do you feel?</h2>
+      <div class="label">Mood</div>
+      <div class="moodrow" id="moodRow"></div>
+      <div class="label">Energy</div>
+      <div class="moodrow energy" id="energyRow"></div>
+    </div>
+    <div id="habitCards"></div>
+    <div class="actions" style="margin-bottom:14px"><button class="btn ghost" id="manageBtn">Manage habits &amp; categories</button></div>
+    <div class="card">
+      <h2>Money this month</h2>
+      <div class="stats" id="moneySnap"></div>
+    </div>    <div class="card">
+      <h2>Your data</h2>
+      <div class="sub" style="margin:-6px 0 10px">Everything stays on this phone. Save a backup to iCloud Drive now and then.</div>
+      <div class="actions"><button class="btn ghost" id="quickBackup">Save backup file</button></div>
+    </div>
+  </div>
+
+  <!-- GOALS -->
+  <div id="lv-goals" hidden>
+    <div id="goalList"></div>
+    <div class="actions"><button class="btn" id="newGoal">+ New goal</button></div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div id="lv-social" hidden>
+    <div class="card">
+      <div class="h2row"><h2>People</h2><button class="link" id="newSoc">+ Log interaction</button></div>
+      <div class="stats" id="socStats"></div>
+    </div>
+    <div class="card">
+      <h2>Recent</h2>
+      <div id="socList"></div>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <div id="lv-review" hidden>
+    <div class="seg seg3" id="rSeg">
+      <button data-p="week" class="on">Week</button><button data-p="month">Month</button><button data-p="year">Year</button>
+    </div>
+    <div class="daynav"><button id="rPrev">‹</button><b id="rLabel"></b><button id="rNext">›</button></div>
+    <div class="card"><h2>Summary</h2><div class="stats" id="rSummary"></div></div>
+    <div class="card"><h2>Mood calendar</h2><div id="rCal"></div></div>
+    <div class="card"><h2>Insights</h2><div id="rIns"></div></div>
+    <div class="card"><h2>Habits by category</h2><div id="rCats"></div><div class="sub">Tap a category or habit for a detailed report.</div></div>
+    <div class="card"><h2>Taxi vs bus</h2><div class="stats" id="rTaxi"></div></div>
+    <div class="card"><h2>Weight &amp; steps</h2><div id="rBody"></div></div>
+    <div class="card"><h2>Everything you logged</h2><div id="rAll"></div></div>
+  </div>
+</div>
+
+<div id="healthView" class="wrap" hidden>
+  <div class="lifetop">
+    <div class="hello">Health</div>
+    <button class="iconbtn" id="openSettings4" aria-label="Settings">⚙︎</button>
+  </div>
+  <div class="daynav"><button id="hPrev">‹</button><b id="hLabel">Today</b><button id="hNext">›</button></div>
+  <div id="hTimerBox"></div>
+  <div class="card" style="background:linear-gradient(135deg,#d4f1e4,#d9ecfb)">
+    <div class="h2row"><h2>Weight</h2><button class="link" id="weightBtn">+ Enter weight</button></div>
+    <div id="hWeight"></div>
+  </div>
+  <div class="card">
+    <div class="h2row"><h2>Steps &amp; distance</h2><button class="link" id="healthImport">Import from Health</button></div>
+    <div class="stats" id="bodyStats"></div>
+  </div>
+  <div id="hHabitCards"></div>
+  <div class="actions" style="margin-bottom:14px"><button class="btn ghost" id="hManageBtn">Manage habits &amp; categories</button></div>
+  <div class="card">
+    <div class="h2row"><h2>Progress</h2><div class="seg" id="hPer" style="margin:0;width:150px"><button data-p="week" class="on">Week</button><button data-p="month">Month</button></div></div>
+    <div class="stats" id="hStats"></div>
+    <div id="hCats" style="margin-top:8px"></div>
+  </div>
+</div>
+
+<div id="cleanView" class="wrap" hidden>
+  <div class="lifetop">
+    <div class="hello">Cleaning</div>
+    <button class="iconbtn" id="openSettings3" aria-label="Settings">⚙︎</button>
+  </div>
+  <div class="card" style="background:linear-gradient(135deg,#d9ecfb,#e6e0fb)">
+    <div class="label">Apartment up to date</div>
+    <div class="big2" id="clScore" style="margin-bottom:4px">—</div>
+    <div class="bar" style="background:rgba(255,255,255,.6)"><i id="clBar" style="width:0;background:#6b9fd0"></i></div>
+    <div class="sub" id="clScoreTxt"></div>
+  </div>
+  <div class="seg seg3" id="clSeg">
+    <button data-v="todo" class="on">To do</button><button data-v="rooms">Rooms</button><button data-v="history">History</button>
+  </div>
+  <div id="cl-todo"></div>
+  <div id="cl-rooms" hidden></div>
+  <div id="cl-history" hidden></div>
+  <div class="actions" style="margin-top:4px"><button class="btn" id="newChore">+ Chore</button><button class="btn ghost" id="newRoom">+ Room</button></div>
+</div>
+
+<!-- chore form -->
+<div class="sheet" id="choreSheet" role="dialog" aria-label="Chore">
+  <div class="grab"></div>
+  <h2 id="choreTitle">New chore</h2>
+  <label class="field"><input id="choreName" placeholder="Chore, e.g. Wipe dust" maxlength="50"></label>
+  <div class="chips" id="choreIdeas"></div>
+  <div class="label" style="margin-bottom:8px">Room</div>
+  <div class="chips" id="choreRooms"></div>
+  <div class="label">Repeat every</div>
+  <div style="display:flex;gap:10px;margin:6px 0 12px;align-items:center">
+    <label class="field" style="width:90px;margin:0"><input id="choreEvery" type="number" inputmode="numeric" min="1" value="1"></label>
+    <div class="chips" id="choreUnit" style="margin:0"></div>
+  </div>
+  <label class="field"><span class="label">Usual time (minutes, optional)</span><input id="choreMins" type="number" inputmode="numeric" min="0" placeholder="e.g. 20" style="margin-top:6px"></label>
+  <label class="field" id="choreLastWrap"><span class="label">Last done (optional — leave empty if not sure)</span><input id="choreLast" type="date" style="margin-top:6px"></label>
+  <div class="actions">
+    <button class="btn danger" id="choreDel" hidden>Delete</button>
+    <button class="btn ghost" data-close>Cancel</button>
+    <button class="btn" id="choreSave">Save</button>
+  </div>
+</div>
+
+<!-- chore detail -->
+<div class="sheet" id="choreDetail" role="dialog" aria-label="Chore details">
+  <div class="grab"></div>
+  <div id="cdBody"></div>
+  <label class="field"><span class="label">Done on</span><input id="cdDate" type="date" style="margin-top:6px"></label>
+  <div class="actions"><button class="btn ghost" id="cdEdit">Edit</button><button class="btn" id="cdDone">Mark done</button></div>
+  <div class="label" style="margin:16px 0 4px">History</div>
+  <div id="cdHist"></div>
+  <div class="actions" style="margin-top:12px"><button class="btn ghost" data-close>Close</button></div>
+</div>
+
+<!-- room form -->
+<div class="sheet" id="roomSheet" role="dialog" aria-label="Room">
+  <div class="grab"></div>
+  <h2 id="roomTitle">New room</h2>
+  <label class="field"><input id="roomName" placeholder="Room, e.g. Balcony" maxlength="30"></label>
+  <div class="label" style="margin-bottom:8px">Icon</div>
+  <div class="chips" id="roomIcons"></div>
+  <div class="actions">
+    <button class="btn danger" id="roomDel" hidden>Delete</button>
+    <button class="btn ghost" data-close>Cancel</button>
+    <button class="btn" id="roomSave">Save</button>
+  </div>
+</div>
+
+<!-- habit manager -->
+<div class="sheet" id="manSheet" role="dialog" aria-label="Manage habits">
+  <div class="grab"></div>
+  <h2>Habits &amp; categories</h2>
+  <div class="actions"><button class="btn" id="newHabit">+ Habit</button><button class="btn ghost" id="newCat">+ Category</button></div>
+  <div id="manList"></div>
+  <div class="actions" style="margin-top:16px"><button class="btn ghost" data-close>Close</button></div>
+</div>
+
+<!-- habit form -->
+<div class="sheet" id="habSheet" role="dialog" aria-label="Habit">
+  <div class="grab"></div>
+  <h2 id="habTitle">New habit</h2>
+  <label class="field"><input id="habName" placeholder="Habit name, e.g. Study credit modelling" maxlength="50"></label>
+  <div class="label" style="margin-bottom:8px">Category</div>
+  <div class="chips" id="habCats"></div>
+  <div class="label" style="margin-bottom:8px">Goal type</div>
+  <div class="seg seg3" id="habKind">
+    <button data-k="count" class="on">Times</button><button data-k="duration">Duration</button><button data-k="time">By a time</button>
+  </div>
+  <div id="habCountWrap"><label class="field"><span class="label">How many times</span><input id="habTarget" type="number" inputmode="numeric" min="1" value="1" style="margin-top:6px"></label></div>
+  <div id="habDurWrap" hidden>
+    <div class="label">How long</div>
+    <div style="display:flex;gap:10px;margin:6px 0 12px">
+      <label class="field" style="flex:1;margin:0"><input id="habHours" type="number" inputmode="numeric" min="0" placeholder="0 h"></label>
+      <label class="field" style="flex:1;margin:0"><input id="habMins" type="number" inputmode="numeric" min="0" placeholder="30 min"></label>
+    </div>
+  </div>
+  <div id="habPerWrap"><div class="label" style="margin-bottom:8px">Per</div><div class="chips" id="habPer"></div></div>
+  <div id="habTimeWrap" hidden><label class="field"><span class="label">Done by (every day)</span><input id="habTime" type="time" value="23:00" style="margin-top:6px"></label></div>
+  <div class="actions">
+    <button class="btn danger" id="habArchive" hidden>Archive</button>
+    <button class="btn ghost" data-close>Cancel</button>
+    <button class="btn" id="habSave">Save</button>
+  </div>
+</div>
+
+<!-- category form -->
+<div class="sheet" id="catSheet" role="dialog" aria-label="Category">
+  <div class="grab"></div>
+  <h2 id="catTitle">New category</h2>
+  <label class="field"><input id="catName" placeholder="Category name" maxlength="30"></label>
+  <div class="label" style="margin-bottom:8px">Shows in</div>
+  <div class="seg" id="catArea"><button data-a="life" class="on">🌿 Life tab</button><button data-a="health">🍎 Health tab</button></div>
+  <div class="label" style="margin-bottom:8px">Icon</div>
+  <div class="chips" id="catIcons"></div>
+  <div class="label" style="margin-bottom:8px">Color</div>
+  <div class="colors" id="catColors"></div>
+  <div class="actions">
+    <button class="btn danger" id="catDel" hidden>Delete</button>
+    <button class="btn ghost" data-close>Cancel</button>
+    <button class="btn" id="catSave">Save</button>
+  </div>
+</div>
+
+<!-- add duration -->
+<div class="sheet" id="durSheet" role="dialog" aria-label="Add time">
+  <div class="grab"></div>
+  <h2 id="durTitle">Add time</h2>
+  <div class="chips" id="durQuick"></div>
+  <div style="display:flex;gap:10px;margin-bottom:12px">
+    <label class="field" style="flex:1;margin:0"><span class="label">Hours</span><input id="durH" type="number" inputmode="numeric" min="0" placeholder="0" style="margin-top:6px"></label>
+    <label class="field" style="flex:1;margin:0"><span class="label">Minutes</span><input id="durM" type="number" inputmode="numeric" min="0" placeholder="0" style="margin-top:6px"></label>
+  </div>
+  <div class="actions"><button class="btn ghost" data-close>Cancel</button><button class="btn" id="durSave">Add</button></div>
+</div>
+
+<!-- time entry -->
+<div class="sheet" id="timeSheet" role="dialog" aria-label="Time">
+  <div class="grab"></div>
+  <h2 id="timeTitle">What time?</h2>
+  <label class="field"><input id="timeVal" type="time"></label>
+  <div class="actions"><button class="btn danger" id="timeClear">Clear</button><button class="btn ghost" data-close>Cancel</button><button class="btn" id="timeSave">Save</button></div>
+</div>
+
+<!-- weight -->
+<div class="sheet" id="wSheet" role="dialog" aria-label="Weight">
+  <div class="grab"></div>
+  <h2>Weight</h2>
+  <div class="amt"><input id="wVal" inputmode="decimal" placeholder="0.0" autocomplete="off"><span>kg</span></div>
+  <label class="field"><input id="wDate" type="date"></label>
+  <div class="actions"><button class="btn ghost" data-close>Cancel</button><button class="btn" id="wSave">Save</button></div>
+</div>
+
+<!-- paste health -->
+<div class="sheet" id="pasteSheet" role="dialog" aria-label="Import from Health">
+  <div class="grab"></div>
+  <h2>Import from Health</h2>
+  <div class="hint">Run your “Health to My Money” shortcut, then paste here (tap the box, then Paste).</div>
+  <label class="field"><textarea id="pasteBox" rows="4" placeholder="MYLIFE date=… steps=… km=… kg=…"></textarea></label>
+  <div class="actions"><button class="btn ghost" data-close>Cancel</button><button class="btn" id="pasteGo">Import</button></div>
+</div>
+
+<!-- goal form -->
+<div class="sheet" id="goalSheet" role="dialog" aria-label="Goal">
+  <div class="grab"></div>
+  <h2 id="goalTitle">New goal</h2>
+  <div class="seg seg3" id="goalKind">
+    <button data-k="custom" class="on">Custom</button><button data-k="savings">Savings</button><button data-k="debt">Debt payoff</button>
+  </div>
+  <label class="field"><input id="goalName" placeholder="Goal, e.g. Get FRM certified" maxlength="60"></label>
+  <label class="field"><span class="label">Target date (optional)</span><input id="goalDate" type="date" style="margin-top:6px"></label>
+  <div id="gSavWrap" hidden>
+    <div class="label">Target amount</div>
+    <div class="amt"><input id="goalTarget" inputmode="decimal" placeholder="0" autocomplete="off"><span>₸</span></div>
+    <div class="label" style="margin-bottom:8px">Accounts that count (none selected = all deposits)</div>
+    <div class="chips" id="goalAccs"></div>
+  </div>
+  <div id="gDebtWrap" hidden>
+    <div class="label" style="margin-bottom:8px">Loans (none selected = all loans)</div>
+    <div class="chips" id="goalLoans"></div>
+  </div>
+  <div id="gCustomWrap">
+    <div class="label" style="margin-bottom:8px">Milestones</div>
+    <div id="msEdit"></div>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <label class="field" style="flex:1;margin:0"><input id="msNew" placeholder="Add a step…" maxlength="80"></label>
+      <button class="btn small" id="msAdd">Add</button>
+    </div>
+    <div class="label" style="margin-bottom:8px">Linked habits</div>
+    <div class="chips" id="goalHabits"></div>
+  </div>
+  <div class="actions">
+    <button class="btn danger" id="goalDel" hidden>Delete</button>
+    <button class="btn ghost" data-close>Cancel</button>
+    <button class="btn" id="goalSave">Save</button>
+  </div>
+</div>
+
+<!-- social form -->
+<div class="sheet" id="socSheet" role="dialog" aria-label="Interaction">
+  <div class="grab"></div>
+  <h2 id="socTitle">Log interaction</h2>
+  <div class="label" style="margin-bottom:8px">Who started it</div>
+  <div class="seg" id="socWho"><button data-v="me" class="on">I did</button><button data-v="them">They did</button></div>
+  <div class="label" style="margin-bottom:8px">Context</div>
+  <div class="seg" id="socCtx"><button data-v="work" class="on">Work</button><button data-v="personal">Personal</button></div>
+  <div class="label" style="margin-bottom:8px">Type</div>
+  <div class="chips" id="socType"></div>
+  <div class="label">How it felt</div>
+  <div class="moodrow" id="socFeel" style="max-width:220px"></div>
+  <label class="field"><input id="socNote" placeholder="Note (optional), e.g. a name" maxlength="100"></label>
+  <label class="field"><input id="socDate" type="date"></label>
+  <div class="actions">
+    <button class="btn danger" id="socDel" hidden>Delete</button>
+    <button class="btn ghost" data-close>Cancel</button>
+    <button class="btn" id="socSave">Save</button>
+  </div>
+</div>
+
+<!-- report -->
+<div class="sheet" id="repSheet" role="dialog" aria-label="Report">
+  <div class="grab"></div>
+  <div id="repBody"></div>
+  <div class="actions" style="margin-top:14px"><button class="btn ghost" id="repBack" hidden>‹ Back</button><button class="btn ghost" data-close>Close</button></div>
+</div>
+
+<nav class="tabbar"><button data-tab="money"><span>💰</span>Money</button><button data-tab="life"><span>🌿</span>Life</button><button data-tab="health"><span>🍎</span>Health</button><button data-tab="clean"><span>🧽</span>Cleaning</button></nav>
 
 <button class="fab" id="fab"><span style="font-size:22px;line-height:0">+</span> Add</button>
 
@@ -272,11 +672,14 @@ h2{font-size:15px;margin:0 0 12px;font-weight:700}
   <div class="actions" style="margin-bottom:12px">
     <button class="btn" id="saveSettings">Save limit</button>
   </div>
-  <div class="label" style="margin:6px 0 8px">Backup (your data lives only on this phone)</div>
+  <div class="label" style="margin:6px 0 8px">Backup &amp; export — Money and Life (data lives only on this phone)</div>
   <div class="actions"><button class="btn ghost" id="exportBtn">Save backup file</button></div>
   <div class="actions"><button class="btn ghost" id="importBtn">Restore from backup</button></div>
   <input type="file" id="importFile" accept=".json,application/json" style="display:none">
   <div class="actions"><button class="btn ghost" id="csvBtn">Export this month as CSV</button></div>
+  <div class="actions"><button class="btn ghost" id="allCsvBtn">Export all money as CSV</button></div>
+  <div class="actions"><button class="btn ghost" id="lifeCsvBtn">Export Life &amp; Health data as CSV</button></div>
+  <div class="actions"><button class="btn ghost" id="cleanCsvBtn">Export cleaning history as CSV</button></div>
   <div class="sub" id="backupInfo" style="margin:4px 0 10px"></div>
   <div class="actions"><button class="btn ghost" id="closeSettings">Close</button></div>
 </div>
@@ -831,6 +1234,1174 @@ render();
 try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch {}
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
 if (state.tx.length >= 10 && Date.now() - (state.lastBackup||0) > 30*864e5) setTimeout(()=>toast("Tip: save a backup in ⚙︎"), 1500);
+</script>
+<script>
+/* ===================== LIFE ===================== */
+const LKEY = "mylife.v1";
+const PASTELS = [
+  {id:"mint",bg:"#d4f1e4",ink:"#2f8a6a"},{id:"sky",bg:"#d9ecfb",ink:"#3f7fb5"},{id:"lav",bg:"#e6e0fb",ink:"#6b5fc7"},
+  {id:"butter",bg:"#fff3c9",ink:"#a8841f"},{id:"pink",bg:"#fbdde8",ink:"#c0587e"},{id:"peach",bg:"#ffe2d3",ink:"#c46a43"}
+];
+const pastel = id => PASTELS.find(p=>p.id===id) || PASTELS[2];
+const CAT_ICONS = ["🌿","🧽","📚","💼","🤝","✨","🏃‍♀️","🧘‍♀️","🍎","💤","🎨","🏠","💰","❤️","🌸","🧠"];
+const MOODS = ["😞","🙁","😐","🙂","😄"];
+const MOOD_COL = ["#f6b8b8","#fcd5b5","#fbefb8","#c9ecc9","#a3dfc4"];
+const FEEL = ["😕","😐","😊"];
+const SOC_TYPES = [{id:"chat",l:"💬 Chat"},{id:"call",l:"📞 Call"},{id:"meeting",l:"🤝 Meeting"},{id:"event",l:"🎉 Event"},{id:"message",l:"✉️ Message"}];
+const PER_LBL = {day:"day",week:"week",month:"month",year:"year"};
+const PER_NOW = {day:"today",week:"this week",month:"this month",year:"this year"};
+const DEFAULT_CATS = [
+  {id:"health",name:"Health",color:"mint",icon:"🌿"},{id:"cleaning",name:"Cleaning",color:"sky",icon:"🧽"},
+  {id:"study",name:"Study",color:"lav",icon:"📚"},{id:"work",name:"Work",color:"butter",icon:"💼"},
+  {id:"society",name:"Society",color:"pink",icon:"🤝"},{id:"other",name:"Other",color:"peach",icon:"✨"}
+];
+
+const L = { cats:[], habits:[], logs:[], checkins:{}, social:[], goals:[], health:{}, timer:null };
+const ui = { view:"today", day: todayStr(), rPeriod:"week", rAnchor: todayStr(), showAll:false, repStack:[] };
+
+function seed(){
+  const t = todayStr();
+  L.cats = DEFAULT_CATS.map(c=>({...c}));
+  L.habits = [
+    {id:newId(),name:"In bed by 23:00",cat:"health",kind:"time",time:"23:00",period:"day",target:1,created:t},
+    {id:newId(),name:"Posture exercises",cat:"health",kind:"duration",target:10,period:"day",created:t}
+  ];
+  L.goals = [
+    {id:newId(),kind:"savings",name:"Savings",target:0,accounts:[],targetDate:"",created:t},
+    {id:newId(),kind:"debt",name:"Debt payoff",loans:[],targetDate:"",created:t}
+  ];
+}
+function lload(){
+  try {
+    const s = JSON.parse(localStorage.getItem(LKEY) || "null");
+    if (s && Array.isArray(s.cats)) Object.assign(L, s); else { seed(); lsave(); }
+  } catch { seed(); }
+  ["logs","social","goals","habits","cats"].forEach(k => { if (!Array.isArray(L[k])) L[k] = []; });
+  if (!L.checkins || typeof L.checkins !== "object") L.checkins = {};
+  if (!L.health || typeof L.health !== "object") L.health = {};
+}
+function lsave(){
+  try { localStorage.setItem(LKEY, JSON.stringify(L)); return true; }
+  catch { notice("Couldn't save on this phone — storage may be full or blocked."); return false; }
+}
+
+/* ---------- dates & periods ---------- */
+const D = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d, 12); };
+const S = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const addDays = (s,n) => { const d = D(s); d.setDate(d.getDate()+n); return S(d); };
+function range(period, s){
+  const d = D(s);
+  if (period === "day") return [s, s];
+  if (period === "week"){ const wd = (d.getDay()+6)%7; const a = addDays(s, -wd); return [a, addDays(a, 6)]; }
+  if (period === "month") return [`${d.getFullYear()}-${pad(d.getMonth()+1)}-01`, S(new Date(d.getFullYear(), d.getMonth()+1, 0, 12))];
+  return [`${d.getFullYear()}-01-01`, `${d.getFullYear()}-12-31`];
+}
+function units(period, a, b){ const out = []; let r = range(period, a); while (r[0] <= b){ out.push(r); r = range(period, addDays(r[1], 1)); } return out; }
+function daysIn(a, b){ const out = []; for (let s = a; s <= b; s = addDays(s, 1)) out.push(s); return out; }
+const fmtDay = (s, o={weekday:"short",day:"numeric",month:"short"}) => D(s).toLocaleDateString("en-GB", o);
+function fmtMin(m){ m = Math.round(m); const h = Math.floor(m/60), r = m%60; return h ? (r ? `${h}h ${r}m` : `${h}h`) : `${r}m`; }
+function periodLabel(p, a, b){
+  if (p === "week") return `${D(a).getDate()} ${D(a).toLocaleDateString("en-GB",{month:"short"})} – ${fmtDay(b,{day:"numeric",month:"short",year:"numeric"})}`;
+  if (p === "month") return D(a).toLocaleDateString("en-GB",{month:"long",year:"numeric"});
+  return String(D(a).getFullYear());
+}
+const unitLabel = (per, s) => per === "day" ? fmtDay(s) : per === "week" ? "Week of " + fmtDay(s,{day:"numeric",month:"short"}) : per === "month" ? D(s).toLocaleDateString("en-GB",{month:"long",year:"numeric"}) : String(D(s).getFullYear());
+
+/* ---------- habit maths ---------- */
+const catById = id => L.cats.find(c=>c.id===id) || L.cats.find(c=>c.id==="other") || {id:"other",name:"Other",color:"peach",icon:"✨"};
+const habById = id => L.habits.find(h=>h.id===id);
+const activeHabits = () => L.habits.filter(h=>!h.archived);
+const logsOf = (hid, a, b) => L.logs.filter(l => l.habit===hid && l.date>=a && l.date<=b);
+function minsNorm(t, target){ const [h,m] = t.split(":").map(Number); let v = h*60+m; const th = Number(target.split(":")[0]); if (th >= 12 && h < 12) v += 1440; return v; }
+const onTime = (h, l) => !!l && !!l.time && minsNorm(l.time, h.time) <= minsNorm(h.time, h.time);
+const perOf = h => h.kind === "time" ? "day" : h.period;
+function progress(h, a, b){
+  const ls = logsOf(h.id, a, b);
+  if (h.kind === "time"){ const l = ls[ls.length-1]; return {val: l?1:0, target:1, met: onTime(h,l), log:l}; }
+  const val = ls.reduce((s,l)=>s+(Number(l.value)||0),0);
+  return {val, target:h.target, met: val >= h.target};
+}
+function unitsFor(h, a, b){
+  const t = todayStr(), created = h.created || "2000-01-01";
+  return units(perOf(h), a, b).filter(([s,e]) => s <= t && e >= created)
+    .map(([s,e]) => ({s, e, ...progress(h, s, e), ongoing: e >= t}));
+}
+function rate(h, a, b){
+  const us = unitsFor(h, a, b).filter(u => !u.ongoing || u.met);
+  if (!us.length) return null;
+  return us.filter(u=>u.met).length / us.length;
+}
+function streaks(h){
+  const per = perOf(h), t = todayStr();
+  const us = units(per, h.created || t, t).map(([s,e]) => ({...progress(h,s,e), ongoing: e >= t}));
+  let best = 0, run = 0;
+  us.forEach(u => { if (u.met) { run++; best = Math.max(best, run); } else if (!u.ongoing) run = 0; });
+  let cur = 0;
+  for (let i = us.length-1; i >= 0; i--){ if (us[i].met) cur++; else if (us[i].ongoing) continue; else break; }
+  return {cur, best};
+}
+function targetText(h){
+  if (h.kind === "time") return `by ${h.time} every day`;
+  if (h.kind === "duration") return `${fmtMin(h.target)} per ${PER_LBL[h.period]}`;
+  return `${h.target}× per ${PER_LBL[h.period]}`;
+}
+function progText(h, p){
+  if (h.kind === "time") return p.log ? (p.met ? `✓ ${p.log.time}` : `${p.log.time} · late`) : `by ${h.time}`;
+  if (h.kind === "duration") return `${fmtMin(p.val)} of ${fmtMin(p.target)} ${PER_NOW[h.period]}`;
+  return `${p.val} of ${p.target} ${PER_NOW[h.period]}`;
+}
+const pctTxt = r => r === null ? "—" : Math.round(r*100) + "%";
+
+/* ---------- money links ---------- */
+function moneyIn(a, b){
+  const tx = state.tx.filter(t => t.date >= a && t.date <= b);
+  const spent = tx.reduce((s,t)=>s+spendOf(t),0);
+  const everyday = tx.filter(t=>!FIXED.has(spendCat(t))).reduce((s,t)=>s+spendOf(t),0);
+  const taxi = tx.filter(t=>t.type==="expense"&&t.cat==="taxi"), bus = tx.filter(t=>t.type==="expense"&&t.cat==="bus");
+  return {tx, spent, everyday, taxi, bus};
+}
+function taxiBus(a, b){
+  const m = moneyIn(a, b);
+  const tSum = m.taxi.reduce((s,t)=>s+t.amount,0), bSum = m.bus.reduce((s,t)=>s+t.amount,0);
+  const all = moneyIn("2000-01-01", todayStr());
+  const tAll = all.taxi.reduce((s,t)=>s+t.amount,0), bAll = all.bus.reduce((s,t)=>s+t.amount,0);
+  const avgT = all.taxi.length ? tAll/all.taxi.length : 0, avgB = all.bus.length ? bAll/all.bus.length : 0;
+  const saved = avgT > avgB ? m.bus.length * (avgT - avgB) : 0;
+  return {tSum, bSum, tN:m.taxi.length, bN:m.bus.length, saved, avgT, avgB};
+}
+
+/* ---------- tabs & views ---------- */
+let tab = "money";
+try { tab = localStorage.getItem("mymoney.tab") || "money"; } catch {}
+function setTab(t){
+  tab = t; try { localStorage.setItem("mymoney.tab", t); } catch {}
+  $("moneyView").hidden = t !== "money";
+  $("lifeView").hidden = t !== "life";
+  $("healthView").hidden = t !== "health";
+  $("cleanView").hidden = t !== "clean";
+  $("fab").style.display = t === "money" ? "" : "none";
+  document.querySelectorAll(".tabbar button").forEach(b => b.classList.toggle("on", b.dataset.tab === t));
+  if (t === "life") renderLife(); else if (t === "health") renderHealth(); else if (t === "clean") renderClean(); else render();
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll(".tabbar button").forEach(b => b.onclick = () => setTab(b.dataset.tab));
+$("lifeSeg").onclick = e => { const b = e.target.closest("button"); if (!b) return; ui.view = b.dataset.v; renderLife(); window.scrollTo(0,0); };
+$("openSettings2").onclick = () => $("openSettings").onclick();
+document.addEventListener("click", e => { if (e.target.closest("[data-close]")) closeSheet(); });
+
+function renderLife(){
+  const h = new Date().getHours();
+  $("hello").textContent = h < 5 ? "Good night" : h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+  document.querySelectorAll("#lifeSeg button").forEach(b => b.classList.toggle("on", b.dataset.v === ui.view));
+  ["today","goals","social","review"].forEach(v => $("lv-"+v).hidden = ui.view !== v);
+  if (ui.view === "today") renderToday();
+  else if (ui.view === "goals") renderGoals();
+  else if (ui.view === "social") renderSocial();
+  else renderReview();
+}
+
+/* ---------- TODAY ---------- */
+function renderToday(){
+  const d = ui.day, t = todayStr();
+  $("dLabel").textContent = d === t ? "Today" : d === addDays(t,-1) ? "Yesterday" : fmtDay(d);
+  $("dNext").style.visibility = d >= t ? "hidden" : "visible";
+  const ci = L.checkins[d] || {};
+  $("moodRow").innerHTML = MOODS.map((m,i) => `<button data-m="${i+1}" class="${ci.mood===i+1?"on":""}" style="${ci.mood===i+1?`background:${MOOD_COL[i]}`:""}">${m}</button>`).join("");
+  $("energyRow").innerHTML = [1,2,3,4,5].map(i => `<button data-e="${i}" class="${ci.energy===i?"on":""}" style="${ci.energy===i?"background:var(--butter)":""}">${"⚡".repeat(1)}${i}</button>`).join("");
+  renderTimer();
+  $("habitCards").innerHTML = habitCardsHtml("life", d) || `<div class="card empty">No habits yet — tap “Manage habits” to add your first.</div>`;
+  // money
+  const [ma, mb] = range("month", d);
+  const m = moneyIn(ma, mb), dm = moneyIn(d, d), tb = taxiBus(ma, mb);
+  const left = state.budget ? state.budget - m.everyday : null;
+  $("moneySnap").innerHTML = `
+    <div class="stat"><span class="label">Everyday</span><b>${money(m.everyday)}</b><small>${left===null?"no limit set":left>=0?money(left)+" left":money(-left)+" over"}</small></div>
+    <div class="stat"><span class="label">${d===t?"Today":"That day"}</span><b>${money(dm.spent)}</b><small>${dm.tx.filter(x=>spendOf(x)>0).length} purchase${dm.tx.filter(x=>spendOf(x)>0).length===1?"":"s"}</small></div>
+    <div class="stat"><span class="label">🚕 Taxi</span><b>${money(tb.tSum)}</b><small>${tb.tN} ride${tb.tN===1?"":"s"}</small></div>
+    <div class="stat"><span class="label">🚌 Bus</span><b>${money(tb.bSum)}</b><small>${tb.bN} ride${tb.bN===1?"":"s"}${tb.saved?` · saved ~${money(tb.saved)}`:""}</small></div>`;
+}
+function habitCardsHtml(area, d){
+  return L.cats.filter(c => (c.area||"life") === area).map(c => {
+    const hs = activeHabits().filter(h => (catById(h.cat).id) === c.id);
+    if (!hs.length) return "";
+    const p = pastel(c.color);
+    let done = 0;
+    const rows = hs.map(h => {
+      const [a,b] = range(perOf(h), d);
+      const pr = progress(h, a, b); if (pr.met) done++;
+      const pct = h.kind === "time" ? (pr.met ? 100 : pr.log ? 40 : 0) : Math.min(100, pr.val / pr.target * 100);
+      const live = L.timer && L.timer.habit === h.id;
+      let ctl = "";
+      if (h.kind === "count") ctl = `<button class="round" data-act="minus" aria-label="Undo">−</button><button class="round plus" data-act="plus" aria-label="Add one">+</button>`;
+      else if (h.kind === "duration") ctl = `<button class="round ${live?"live":""}" data-act="timer" aria-label="Timer">${live?"■":"⏱"}</button><button class="round plus" data-act="addmin" aria-label="Add time">+</button>`;
+      else ctl = `<button class="round" data-act="settime" aria-label="Enter time">🕐</button><button class="round ${pr.met?"plus":""}" data-act="ontime" aria-label="Done on time" style="${pr.met?"":"background:var(--card)"}">✓</button>`;
+      return `<div class="hrow ${pr.met?"done":""}" data-h="${h.id}" style="background:${pr.met?p.bg:"var(--bg)"}">
+        <button class="hname" data-act="report"><b>${esc(h.name)}</b><small>${progText(h, pr)}</small></button>
+        <div class="hctl">${ctl}</div>
+        <div class="hb"><i style="width:${pct}%;background:${p.ink};opacity:.55"></i></div></div>`;
+    }).join("");
+    return `<div class="catcard"><div class="cathead"><span>${c.icon}</span>${esc(c.name)}<span class="pill" style="background:${p.bg};color:${p.ink}">${done}/${hs.length}</span></div>${rows}</div>`;
+  }).join("");
+}
+function renderTimer(){
+  if (!L.timer){ $("timerBox").innerHTML = ""; $("hTimerBox").innerHTML = ""; return; }
+  const h = habById(L.timer.habit);
+  if (!h){ L.timer = null; lsave(); $("timerBox").innerHTML = ""; $("hTimerBox").innerHTML = ""; return; }
+  const html = `<div class="timerbar"><span style="font-size:22px">⏱</span><div class="grow"><small>${esc(h.name)}</small><b class="timerTxt">${elapsed()}</b></div><button class="btn small" data-stop>Stop</button></div>`;
+  const inHealth = (catById(h.cat).area || "life") === "health";
+  $("timerBox").innerHTML = inHealth ? "" : html; $("hTimerBox").innerHTML = inHealth ? html : "";
+  document.querySelectorAll("[data-stop]").forEach(b => b.onclick = () => stopTimer());
+}
+function elapsed(){ if (!L.timer) return ""; const s = Math.max(0, Math.floor((Date.now()-L.timer.start)/1000)); return `${Math.floor(s/3600)}:${pad(Math.floor(s/60)%60)}:${pad(s%60)}`; }
+setInterval(() => { if (L.timer) document.querySelectorAll(".timerTxt").forEach(el => el.textContent = elapsed()); }, 1000);
+function stopTimer(){
+  if (!L.timer) return;
+  const h = habById(L.timer.habit), secs = (Date.now() - L.timer.start)/1000;
+  const date = S(new Date(L.timer.start));
+  L.timer = null;
+  if (h && secs >= 30){ const mins = Math.max(1, Math.round(secs/60)); L.logs.push({id:newId(), habit:h.id, date, value:mins, ts:Date.now()}); toast(`${fmtMin(mins)} added to ${h.name}`); }
+  else toast("Under 30 seconds — not saved");
+  lsave(); rerender();
+}
+
+$("dPrev").onclick = () => { ui.day = addDays(ui.day, -1); renderToday(); };
+$("dNext").onclick = () => { if (ui.day < todayStr()) { ui.day = addDays(ui.day, 1); renderToday(); } };
+$("moodRow").onclick = e => { const b = e.target.closest("button"); if (!b) return; const v = Number(b.dataset.m); const c = L.checkins[ui.day] || (L.checkins[ui.day] = {}); c.mood = c.mood === v ? undefined : v; lsave(); renderToday(); };
+$("energyRow").onclick = e => { const b = e.target.closest("button"); if (!b) return; const v = Number(b.dataset.e); const c = L.checkins[ui.day] || (L.checkins[ui.day] = {}); c.energy = c.energy === v ? undefined : v; lsave(); renderToday(); };
+
+let actHabit = null;
+const habitClick = e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const row = b.closest(".hrow"); const h = habById(row.dataset.h); if (!h) return;
+  const act = b.dataset.act, d = ui.day;
+  if (act === "report") { ui.repStack = []; openHabitReport(h.id); return; }
+  if (act === "plus") { L.logs.push({id:newId(), habit:h.id, date:d, value:1, ts:Date.now()}); }
+  else if (act === "minus") {
+    const ls = L.logs.filter(l=>l.habit===h.id && l.date===d); if (!ls.length) { toast("Nothing to undo for this day"); return; }
+    const last = ls.sort((x,y)=>(x.ts||0)-(y.ts||0)).pop(); L.logs = L.logs.filter(l=>l!==last);
+  }
+  else if (act === "timer") {
+    if (L.timer && L.timer.habit === h.id) { stopTimer(); return; }
+    if (L.timer) { toast("Stop the running timer first"); return; }
+    L.timer = {habit:h.id, start:Date.now()}; toast(`Timer started: ${h.name}`);
+  }
+  else if (act === "addmin") { actHabit = h.id; openDur(h); return; }
+  else if (act === "ontime") {
+    const ex = L.logs.filter(l=>l.habit===h.id && l.date===d);
+    if (ex.length && onTime(h, ex[ex.length-1])) L.logs = L.logs.filter(l=>!(l.habit===h.id && l.date===d));
+    else { L.logs = L.logs.filter(l=>!(l.habit===h.id && l.date===d)); L.logs.push({id:newId(), habit:h.id, date:d, time:h.time, value:1, ts:Date.now()}); }
+  }
+  else if (act === "settime") { actHabit = h.id; openTime(h); return; }
+  lsave(); rerender();
+};
+$("habitCards").onclick = habitClick; $("hHabitCards").onclick = habitClick;
+
+function openDur(h){
+  $("durTitle").textContent = `Add time · ${h.name}`;
+  $("durH").value = ""; $("durM").value = "";
+  $("durQuick").innerHTML = [10,15,30,45,60,90].map(m => `<button class="chip" data-m="${m}">${fmtMin(m)}</button>`).join("");
+  openSheet($("durSheet"));
+}
+$("durQuick").onclick = e => { const b = e.target.closest(".chip"); if (!b) return; const m = Number(b.dataset.m); $("durH").value = Math.floor(m/60) || ""; $("durM").value = m%60 || ""; };
+$("durSave").onclick = () => {
+  const mins = (Number($("durH").value)||0)*60 + (Number($("durM").value)||0);
+  if (!(mins > 0)) { toast("Enter hours or minutes"); return; }
+  L.logs.push({id:newId(), habit:actHabit, date:ui.day, value:mins, ts:Date.now()});
+  closeSheet(); lsave(); rerender(); toast(`${fmtMin(mins)} added`);
+};
+function openTime(h){
+  $("timeTitle").textContent = `${h.name} — what time?`;
+  const ex = L.logs.filter(l=>l.habit===h.id && l.date===ui.day).pop();
+  const n = new Date(); $("timeVal").value = ex && ex.time ? ex.time : `${pad(n.getHours())}:${pad(n.getMinutes())}`;
+  openSheet($("timeSheet"));
+}
+$("timeSave").onclick = () => {
+  const v = $("timeVal").value; if (!v) { toast("Pick a time"); return; }
+  L.logs = L.logs.filter(l=>!(l.habit===actHabit && l.date===ui.day));
+  L.logs.push({id:newId(), habit:actHabit, date:ui.day, time:v, value:1, ts:Date.now()});
+  closeSheet(); lsave(); rerender();
+  const h = habById(actHabit); toast(onTime(h, {time:v}) ? "On time ✓" : "Saved — a bit late");
+};
+$("timeClear").onclick = () => { L.logs = L.logs.filter(l=>!(l.habit===actHabit && l.date===ui.day)); closeSheet(); lsave(); rerender(); };
+
+/* weight & health */
+$("weightBtn").onclick = () => { const r = L.health[ui.day]; $("wVal").value = r && r.kg ? r.kg : ""; $("wDate").value = ui.day; openSheet($("wSheet")); setTimeout(()=>$("wVal").focus(),260); };
+$("wSave").onclick = () => {
+  const v = parseNum($("wVal").value); if (!(v > 20 && v < 400)) { toast("Enter your weight in kg"); return; }
+  const d = $("wDate").value || ui.day; (L.health[d] = L.health[d] || {}).kg = Math.round(v*10)/10;
+  closeSheet(); lsave(); rerender(); toast("Weight saved");
+};
+$("healthImport").onclick = async () => {
+  let txt = "";
+  try { if (navigator.clipboard && navigator.clipboard.readText) txt = await navigator.clipboard.readText(); } catch {}
+  if (txt && /date\s*=/.test(txt)) applyHealth(txt);
+  else { $("pasteBox").value = ""; openSheet($("pasteSheet")); }
+};
+$("pasteGo").onclick = () => { closeSheet(); applyHealth($("pasteBox").value); };
+function applyHealth(txt){
+  let n = 0;
+  txt.split(/\n|\|/).forEach(line => {
+    const dm = line.match(/date\s*=\s*(\d{4}-\d{2}-\d{2})/i); if (!dm) return;
+    const num = k => {
+      const m = line.match(new RegExp(k + "\\s*=\\s*([\\d\\s\\u00a0.,]+)", "i")); if (!m) return null;
+      let s = m[1].replace(/[\s ]/g, "");
+      if (/,\d{1,2}$/.test(s)) s = s.replace(/\./g,"").replace(",", "."); else s = s.replace(/,/g, "");
+      const v = parseFloat(s); return isNaN(v) ? null : v;
+    };
+    const rec = L.health[dm[1]] || {};
+    const st = num("steps"), km = num("km"), kg = num("kg");
+    if (st != null) rec.steps = Math.round(st);
+    if (km != null) rec.km = Math.round(km*100)/100;
+    if (kg != null && kg > 20) rec.kg = Math.round(kg*10)/10;
+    L.health[dm[1]] = rec; n++;
+  });
+  if (n) { lsave(); rerender(); toast(`Imported ${n} day${n>1?"s":""} from Health`); }
+  else toast("No Health data found — run the shortcut first");
+}
+
+/* ---------- MANAGE habits & categories ---------- */
+$("manageBtn").onclick = () => openManager();
+function openManager(){ renderManager(); openSheet($("manSheet")); }
+function renderManager(){
+  let html = L.cats.map(c => {
+    const p = pastel(c.color);
+    const hs = activeHabits().filter(h => catById(h.cat).id === c.id);
+    return `<button class="mancat" data-cat="${c.id}" style="background:${p.bg};color:${p.ink}">${c.icon} ${esc(c.name)}<small>${(c.area||"life")==="health"?"Health tab":"Life tab"} · Edit</small></button>` +
+      hs.map(h => `<button class="manrow" data-hab="${h.id}"><span>${esc(h.name)}</span><small>${targetText(h)}</small></button>`).join("");
+  }).join("");
+  const arch = L.habits.filter(h=>h.archived);
+  if (arch.length) html += `<div class="label" style="margin:18px 0 4px">Archived (history kept)</div>` + arch.map(h =>
+    `<div class="manrow"><span style="opacity:.6">${esc(h.name)}</span><small><button class="link" data-restore="${h.id}">Restore</button> · <button class="link" style="color:var(--exp)" data-purge="${h.id}">Delete forever</button></small></div>`).join("");
+  $("manList").innerHTML = html;
+}
+$("manList").onclick = e => {
+  const c = e.target.closest("[data-cat]"), hb = e.target.closest("[data-hab]"), rs = e.target.closest("[data-restore]"), pg = e.target.closest("[data-purge]");
+  if (rs) { const h = habById(rs.dataset.restore); h.archived = false; lsave(); renderManager(); toast("Habit restored"); return; }
+  if (pg) { const h = habById(pg.dataset.purge); askConfirm(`Delete “${h.name}” and all its history forever?`, "Delete forever", () => { L.habits = L.habits.filter(x=>x!==h); L.logs = L.logs.filter(l=>l.habit!==h.id); L.goals.forEach(g => { if (g.habits) g.habits = g.habits.filter(id=>id!==h.id); }); lsave(); toast("Deleted"); openManager(); }); return; }
+  if (c) openCatForm(c.dataset.cat);
+  else if (hb) openHabForm(hb.dataset.hab);
+};
+$("newHabit").onclick = () => openHabForm(null);
+$("newCat").onclick = () => openCatForm(null);
+
+const hf = { id:null, cat:"health", kind:"count", per:"day" };
+function openHabForm(id){
+  const h = id ? habById(id) : null;
+  hf.id = id; hf.cat = h ? catById(h.cat).id : ((L.cats.find(c => (c.area||"life") === (tab === "health" ? "health" : "life")) || L.cats[0] || {}).id); hf.kind = h ? h.kind : "count"; hf.per = h ? h.period : "day";
+  $("habTitle").textContent = h ? "Edit habit" : "New habit";
+  $("habName").value = h ? h.name : "";
+  $("habTarget").value = h && h.kind === "count" ? h.target : 1;
+  $("habHours").value = h && h.kind === "duration" ? (Math.floor(h.target/60) || "") : "";
+  $("habMins").value = h && h.kind === "duration" ? (h.target%60 || "") : "";
+  $("habTime").value = h && h.time ? h.time : "23:00";
+  $("habArchive").hidden = !h;
+  renderHabForm(); openSheet($("habSheet"));
+}
+function renderHabForm(){
+  $("habCats").innerHTML = L.cats.map(c => `<button class="chip ${c.id===hf.cat?"on":""}" data-c="${c.id}">${c.icon} ${esc(c.name)}${(c.area||"life")==="health"?" · Health":""}</button>`).join("");
+  document.querySelectorAll("#habKind button").forEach(b => b.classList.toggle("on", b.dataset.k === hf.kind));
+  $("habCountWrap").hidden = hf.kind !== "count"; $("habDurWrap").hidden = hf.kind !== "duration";
+  $("habPerWrap").hidden = hf.kind === "time"; $("habTimeWrap").hidden = hf.kind !== "time";
+  $("habPer").innerHTML = ["day","week","month","year"].map(p => `<button class="chip ${p===hf.per?"on":""}" data-p="${p}">${p[0].toUpperCase()+p.slice(1)}</button>`).join("");
+}
+$("habCats").onclick = e => { const b = e.target.closest(".chip"); if (!b) return; hf.cat = b.dataset.c; renderHabForm(); };
+$("habPer").onclick = e => { const b = e.target.closest(".chip"); if (!b) return; hf.per = b.dataset.p; renderHabForm(); };
+document.querySelectorAll("#habKind button").forEach(b => b.onclick = () => { hf.kind = b.dataset.k; renderHabForm(); });
+$("habSave").onclick = () => {
+  const name = $("habName").value.trim(); if (!name) { toast("Give the habit a name"); $("habName").focus(); return; }
+  let target = 1;
+  if (hf.kind === "count") { target = Math.round(Number($("habTarget").value)); if (!(target >= 1)) { toast("Enter how many times"); return; } }
+  if (hf.kind === "duration") { target = (Number($("habHours").value)||0)*60 + (Number($("habMins").value)||0); if (!(target > 0)) { toast("Enter how long"); return; } }
+  const body = { name, cat: hf.cat, kind: hf.kind, period: hf.kind === "time" ? "day" : hf.per, target, time: hf.kind === "time" ? ($("habTime").value || "23:00") : undefined };
+  if (hf.id) Object.assign(habById(hf.id), body); else L.habits.push({ id:newId(), created: todayStr(), ...body });
+  lsave(); toast(hf.id ? "Habit updated" : "Habit added"); rerender(); openManager();
+};
+$("habArchive").onclick = () => {
+  const h = habById(hf.id); if (!h) return;
+  h.archived = true; if (L.timer && L.timer.habit === h.id) L.timer = null;
+  lsave(); rerender(); toast("Archived — restore any time"); openManager();
+};
+
+const cf = { id:null, icon:"✨", color:"lav", area:"life" };
+function openCatForm(id){
+  const c = id ? L.cats.find(x=>x.id===id) : null;
+  cf.id = id; cf.icon = c ? c.icon : "🌸"; cf.color = c ? c.color : "lav"; cf.area = c ? (c.area||"life") : (tab === "health" ? "health" : "life");
+  $("catTitle").textContent = c ? "Edit category" : "New category";
+  $("catName").value = c ? c.name : "";
+  $("catDel").hidden = !c || c.id === "other";
+  renderCatForm(); openSheet($("catSheet"));
+}
+function renderCatForm(){
+  document.querySelectorAll("#catArea button").forEach(b => b.classList.toggle("on", b.dataset.a === cf.area));
+  $("catIcons").innerHTML = CAT_ICONS.map(i => `<button class="chip ${i===cf.icon?"on":""}" data-i="${i}">${i}</button>`).join("");
+  $("catColors").innerHTML = PASTELS.map(p => `<button class="${p.id===cf.color?"on":""}" data-col="${p.id}" style="background:${p.bg}" aria-label="${p.id}"></button>`).join("");
+}
+document.querySelectorAll("#catArea button").forEach(b => b.onclick = () => { cf.area = b.dataset.a; renderCatForm(); });
+$("catIcons").onclick = e => { const b = e.target.closest(".chip"); if (!b) return; cf.icon = b.dataset.i; renderCatForm(); };
+$("catColors").onclick = e => { const b = e.target.closest("button"); if (!b) return; cf.color = b.dataset.col; renderCatForm(); };
+$("catSave").onclick = () => {
+  const name = $("catName").value.trim(); if (!name) { toast("Name the category"); return; }
+  if (cf.id) Object.assign(L.cats.find(c=>c.id===cf.id), {name, icon:cf.icon, color:cf.color, area:cf.area});
+  else L.cats.push({id:newId(), name, icon:cf.icon, color:cf.color, area:cf.area});
+  lsave(); rerender(); openManager();
+};
+$("catDel").onclick = () => {
+  const c = L.cats.find(x=>x.id===cf.id); if (!c) return;
+  const n = L.habits.filter(h=>h.cat===c.id).length;
+  askConfirm(`Delete category “${c.name}”?${n?` Its ${n} habit${n>1?"s":""} will move to Other.`:""}`, "Delete", () => {
+    if (!L.cats.some(x=>x.id==="other")) L.cats.push({id:"other",name:"Other",color:"peach",icon:"✨"});
+    L.habits.forEach(h => { if (h.cat === c.id) h.cat = "other"; });
+    L.cats = L.cats.filter(x=>x!==c); lsave(); rerender(); openManager();
+  });
+};
+
+/* generic confirm (shared with Money) */
+let pendingConfirm = null;
+const moneyConfirmYes = $("confirmYes").onclick;
+$("confirmYes").onclick = () => { if (pendingConfirm) { const f = pendingConfirm; pendingConfirm = null; closeSheet(); f(); } else moneyConfirmYes(); };
+const _closeSheet = closeSheet;
+closeSheet = function(){ pendingConfirm = null; $("confirmYes").textContent = "Delete"; _closeSheet(); };
+function askConfirm(text, yes, fn){ openSheet($("confirmSheet")); $("confirmText").textContent = text; $("confirmYes").textContent = yes || "Delete"; pendingConfirm = fn; }
+
+/* ---------- GOALS ---------- */
+function monthsLeft(date){ if (!date) return null; return (D(date) - D(todayStr())) / (30.44*864e5); }
+function goalInfo(g){
+  if (g.kind === "savings"){
+    const b = balances();
+    const ids = g.accounts && g.accounts.length ? g.accounts : state.accounts.filter(a=>a.kind==="deposit" && !a.hidden).map(a=>a.id);
+    const cur = ids.reduce((s,id)=>s+(b[id]||0),0);
+    const pct = g.target > 0 ? Math.max(0, Math.min(1, cur/g.target)) : 0;
+    const lines = [g.target > 0 ? `${money(cur)} of ${money(g.target)}` : `${money(cur)} saved · set a target amount`,
+      `Counting: ${ids.length ? ids.map(id=>esc(accLabel(id))).join(", ") : "no deposits yet"}`];
+    const ml = monthsLeft(g.targetDate);
+    if (g.target > cur && ml !== null) lines.push(ml > 0 ? `Need ~${money((g.target-cur)/Math.max(ml,1))} per month to reach it by ${fmtDay(g.targetDate,{day:"numeric",month:"short",year:"numeric"})}` : "Target date has passed");
+    if (g.target > 0 && cur >= g.target) lines.push("🎉 Target reached!");
+    return {pct, lines, icon:"🐷", color:"mint"};
+  }
+  if (g.kind === "debt"){
+    const o = owedAll();
+    const loans = state.accounts.filter(isLoan);
+    const ids = g.loans && g.loans.length ? g.loans : loans.filter(a=>!a.hidden).map(a=>a.id);
+    const owed = ids.reduce((s,id)=>s+Math.max(0,o[id]||0),0);
+    const orig = ids.reduce((s,id)=>s+(Number((accById(id)||{}).start)||0),0);
+    const paid = Math.max(0, orig - owed);
+    const pct = orig > 0 ? Math.min(1, paid/orig) : 0;
+    const lines = ids.length ? [`${money(owed)} still owed · ${money(paid)} paid off`] : ["Add your loans in the Money tab (+ New loan)"];
+    const [ma, mb] = range("month", todayStr());
+    const pm = state.tx.filter(t=>t.loan && ids.includes(t.loan) && t.date>=ma && t.date<=mb).reduce((s,t)=>s+(Number(t.principal)||0),0);
+    if (pm) lines.push(`Principal paid this month: ${money(pm)}`);
+    const ml = monthsLeft(g.targetDate);
+    if (owed > 0 && ml !== null) lines.push(ml > 0 ? `Need ~${money(owed/Math.max(ml,1))} principal per month to be debt-free by ${fmtDay(g.targetDate,{day:"numeric",month:"short",year:"numeric"})}` : "Target date has passed");
+    if (ids.length && owed === 0) lines.push("🎉 Debt-free!");
+    return {pct, lines, icon:"🕊️", color:"sky"};
+  }
+  const ms = g.milestones || [];
+  const done = ms.filter(m=>m.done).length;
+  let pct = ms.length ? done/ms.length : 0;
+  const hs = (g.habits||[]).map(habById).filter(Boolean);
+  if (!ms.length && hs.length) { const [a,b] = range("month", todayStr()); const rs = hs.map(h=>rate(h,a,b)).filter(r=>r!==null); pct = rs.length ? rs.reduce((s,r)=>s+r,0)/rs.length : 0; }
+  const lines = [ms.length ? `${done} of ${ms.length} steps done` : hs.length ? "Progress = linked habits this month" : "Add milestones or link habits"];
+  const ml = monthsLeft(g.targetDate);
+  if (ml !== null) lines.push(ml > 0 ? `${Math.ceil(ml*30.44)} days left (by ${fmtDay(g.targetDate,{day:"numeric",month:"short",year:"numeric"})})` : "Target date has passed");
+  return {pct, lines, icon:"🎯", color:"lav", ms, hs};
+}
+function renderGoals(){
+  $("goalList").innerHTML = L.goals.map(g => {
+    const info = goalInfo(g), p = pastel(info.color);
+    const msHtml = info.ms && info.ms.length ? `<div style="margin-top:10px">${info.ms.map(m => `<button class="ms ${m.done?"done":""}" data-g="${g.id}" data-ms="${m.id}"><span class="box">${m.done?"✓":""}</span><span>${esc(m.text)}</span></button>`).join("")}</div>` : "";
+    const hHtml = info.hs && info.hs.length ? `<div>${info.hs.map(h => { const [a,b] = range(perOf(h), todayStr()); const pr = progress(h,a,b); return `<span class="mini-chip">${pr.met?"✓ ":""}${esc(h.name)} · ${progText(h,pr)}</span>`; }).join("")}</div>` : "";
+    return `<div class="goal"><div class="gtop"><div class="gic" style="background:${p.bg}">${info.icon}</div><div class="gname">${esc(g.name)}</div><div class="gpct" style="color:${p.ink}">${Math.round(info.pct*100)}%</div></div>
+      <div class="bar"><i style="width:${info.pct*100}%;background:${p.ink};opacity:.6"></i></div>
+      ${info.lines.map(l=>`<div class="sub">${l}</div>`).join("")}${msHtml}${hHtml}
+      <div style="text-align:right"><button class="link" data-edit="${g.id}">Edit</button></div></div>`;
+  }).join("") || `<div class="card empty">No goals yet.</div>`;
+}
+$("goalList").onclick = e => {
+  const m = e.target.closest("[data-ms]"), ed = e.target.closest("[data-edit]");
+  if (m) { const g = L.goals.find(x=>x.id===m.dataset.g); const s = g.milestones.find(x=>x.id===m.dataset.ms); s.done = !s.done; s.doneDate = s.done ? todayStr() : null; lsave(); renderGoals(); if (s.done) toast("Step done — well done! 🎉"); return; }
+  if (ed) openGoalForm(ed.dataset.edit);
+};
+const gf = { id:null, kind:"custom", accs:[], loans:[], habits:[], ms:[] };
+$("newGoal").onclick = () => openGoalForm(null);
+function openGoalForm(id){
+  const g = id ? L.goals.find(x=>x.id===id) : null;
+  gf.id = id; gf.kind = g ? g.kind : "custom";
+  gf.accs = g && g.accounts ? [...g.accounts] : []; gf.loans = g && g.loans ? [...g.loans] : [];
+  gf.habits = g && g.habits ? [...g.habits] : []; gf.ms = g && g.milestones ? g.milestones.map(m=>({...m})) : [];
+  $("goalTitle").textContent = g ? "Edit goal" : "New goal";
+  $("goalName").value = g ? g.name : ""; $("goalDate").value = g && g.targetDate ? g.targetDate : "";
+  $("goalTarget").value = g && g.target ? nf.format(g.target) : ""; $("msNew").value = "";
+  $("goalDel").hidden = !g; $("goalKind").hidden = !!g;
+  renderGoalForm(); openSheet($("goalSheet"));
+}
+function renderGoalForm(){
+  document.querySelectorAll("#goalKind button").forEach(b => b.classList.toggle("on", b.dataset.k === gf.kind));
+  $("gSavWrap").hidden = gf.kind !== "savings"; $("gDebtWrap").hidden = gf.kind !== "debt"; $("gCustomWrap").hidden = gf.kind !== "custom";
+  $("goalName").placeholder = gf.kind === "savings" ? "e.g. Safety cushion" : gf.kind === "debt" ? "e.g. Debt-free" : "Goal, e.g. Get FRM certified";
+  $("goalAccs").innerHTML = state.accounts.filter(a=>!isLoan(a) && !a.hidden).map(a => `<button class="chip ${gf.accs.includes(a.id)?"on":""}" data-a="${a.id}">${esc(accLabel(a.id))}</button>`).join("") || `<div class="sub">No accounts yet.</div>`;
+  $("goalLoans").innerHTML = state.accounts.filter(a=>isLoan(a) && !a.hidden).map(a => `<button class="chip ${gf.loans.includes(a.id)?"on":""}" data-l="${a.id}">${esc(accLabel(a.id))}</button>`).join("") || `<div class="sub">No loans yet — add them in Money.</div>`;
+  $("goalHabits").innerHTML = activeHabits().map(h => `<button class="chip ${gf.habits.includes(h.id)?"on":""}" data-h="${h.id}">${esc(h.name)}</button>`).join("") || `<div class="sub">No habits yet.</div>`;
+  $("msEdit").innerHTML = gf.ms.map(m => `<div class="manrow"><span>${m.done?"✓ ":""}${esc(m.text)}</span><small><button class="link" style="color:var(--exp)" data-rm="${m.id}">Remove</button></small></div>`).join("");
+}
+const toggleIn = (arr, v) => { const i = arr.indexOf(v); if (i >= 0) arr.splice(i,1); else arr.push(v); };
+document.querySelectorAll("#goalKind button").forEach(b => b.onclick = () => { gf.kind = b.dataset.k; renderGoalForm(); });
+$("goalAccs").onclick = e => { const b = e.target.closest("[data-a]"); if (b) { toggleIn(gf.accs, b.dataset.a); renderGoalForm(); } };
+$("goalLoans").onclick = e => { const b = e.target.closest("[data-l]"); if (b) { toggleIn(gf.loans, b.dataset.l); renderGoalForm(); } };
+$("goalHabits").onclick = e => { const b = e.target.closest("[data-h]"); if (b) { toggleIn(gf.habits, b.dataset.h); renderGoalForm(); } };
+$("msEdit").onclick = e => { const b = e.target.closest("[data-rm]"); if (b) { gf.ms = gf.ms.filter(m=>m.id!==b.dataset.rm); renderGoalForm(); } };
+$("msAdd").onclick = () => { const t = $("msNew").value.trim(); if (!t) return; gf.ms.push({id:newId(), text:t, done:false}); $("msNew").value = ""; renderGoalForm(); $("msNew").focus(); };
+$("msNew").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); $("msAdd").click(); } };
+$("goalSave").onclick = () => {
+  if ($("msNew").value.trim()) $("msAdd").click();
+  const name = $("goalName").value.trim() || (gf.kind==="savings"?"Savings":gf.kind==="debt"?"Debt payoff":"");
+  if (!name) { toast("Name your goal"); return; }
+  const body = { name, kind: gf.kind, targetDate: $("goalDate").value || "" };
+  if (gf.kind === "savings") { body.target = parseNum($("goalTarget").value) || 0; body.accounts = gf.accs; }
+  if (gf.kind === "debt") body.loans = gf.loans;
+  if (gf.kind === "custom") { body.milestones = gf.ms; body.habits = gf.habits; }
+  if (gf.id) Object.assign(L.goals.find(x=>x.id===gf.id), body); else L.goals.push({id:newId(), created:todayStr(), ...body});
+  closeSheet(); lsave(); renderGoals(); toast("Goal saved");
+};
+$("goalDel").onclick = () => { const g = L.goals.find(x=>x.id===gf.id); askConfirm(`Delete goal “${g.name}”?`, "Delete", () => { L.goals = L.goals.filter(x=>x!==g); lsave(); renderGoals(); }); };
+
+/* ---------- SOCIAL ---------- */
+function socStats(a, b){
+  const s = L.social.filter(x=>x.date>=a && x.date<=b);
+  const me = s.filter(x=>x.who==="me").length, work = s.filter(x=>x.ctx==="work").length;
+  return {n:s.length, me, them:s.length-me, work, personal:s.length-work};
+}
+function renderSocial(){
+  const t = todayStr(), [wa,wb] = range("week",t), [ma,mb] = range("month",t);
+  const w = socStats(wa,wb), m = socStats(ma,mb);
+  $("socStats").innerHTML = `
+    <div class="stat"><span class="label">This week</span><b>${w.n}</b><small>${w.me} started by me · ${w.them} by others</small></div>
+    <div class="stat"><span class="label">This month</span><b>${m.n}</b><small>${m.work} work · ${m.personal} personal</small></div>`;
+  const list = L.social.slice().sort((x,y)=>y.date.localeCompare(x.date) || (y.ts||0)-(x.ts||0)).slice(0, 60);
+  let html = "", cur = null;
+  list.forEach(x => {
+    if (x.date !== cur) { cur = x.date; html += `<div class="day"><span>${x.date===t?"Today":fmtDay(x.date)}</span></div>`; }
+    const ty = SOC_TYPES.find(y=>y.id===x.type) || SOC_TYPES[0];
+    html += `<button class="tx" data-s="${x.id}"><div class="ic">${FEEL[(x.feel||2)-1]}</div><div><div class="t">${ty.l} · ${x.ctx==="work"?"Work":"Personal"}</div><div class="n">${x.who==="me"?"I started it":"They started it"}${x.note?" · "+esc(x.note):""}</div></div><div class="a muted">›</div></button>`;
+  });
+  $("socList").innerHTML = html || `<div class="empty">Log a chat, call or meeting with “+ Log interaction”.</div>`;
+}
+const sf = { id:null, who:"me", ctx:"work", type:"chat", feel:3 };
+$("newSoc").onclick = () => openSoc(null);
+$("socList").onclick = e => { const b = e.target.closest("[data-s]"); if (b) openSoc(b.dataset.s); };
+function openSoc(id){
+  const x = id ? L.social.find(s=>s.id===id) : null;
+  Object.assign(sf, x ? {id, who:x.who, ctx:x.ctx, type:x.type, feel:x.feel||2} : {id:null, who:"me", ctx:"work", type:"chat", feel:3});
+  $("socTitle").textContent = x ? "Edit interaction" : "Log interaction";
+  $("socNote").value = x ? (x.note||"") : ""; $("socDate").value = x ? x.date : todayStr();
+  $("socDel").hidden = !x; renderSocForm(); openSheet($("socSheet"));
+}
+function renderSocForm(){
+  document.querySelectorAll("#socWho button").forEach(b => b.classList.toggle("on", b.dataset.v === sf.who));
+  document.querySelectorAll("#socCtx button").forEach(b => b.classList.toggle("on", b.dataset.v === sf.ctx));
+  $("socType").innerHTML = SOC_TYPES.map(t => `<button class="chip ${t.id===sf.type?"on":""}" data-t="${t.id}">${t.l}</button>`).join("");
+  $("socFeel").innerHTML = FEEL.map((f,i) => `<button data-f="${i+1}" class="${sf.feel===i+1?"on":""}">${f}</button>`).join("");
+}
+document.querySelectorAll("#socWho button").forEach(b => b.onclick = () => { sf.who = b.dataset.v; renderSocForm(); });
+document.querySelectorAll("#socCtx button").forEach(b => b.onclick = () => { sf.ctx = b.dataset.v; renderSocForm(); });
+$("socType").onclick = e => { const b = e.target.closest(".chip"); if (b) { sf.type = b.dataset.t; renderSocForm(); } };
+$("socFeel").onclick = e => { const b = e.target.closest("button"); if (b) { sf.feel = Number(b.dataset.f); renderSocForm(); } };
+$("socSave").onclick = () => {
+  const body = { who:sf.who, ctx:sf.ctx, type:sf.type, feel:sf.feel, note:$("socNote").value.trim(), date:$("socDate").value || todayStr() };
+  if (sf.id) Object.assign(L.social.find(s=>s.id===sf.id), body); else L.social.push({id:newId(), ts:Date.now(), ...body});
+  closeSheet(); lsave(); renderSocial(); toast("Saved");
+};
+$("socDel").onclick = () => askConfirm("Delete this interaction?", "Delete", () => { L.social = L.social.filter(s=>s.id!==sf.id); lsave(); renderSocial(); });
+
+/* ---------- REVIEW ---------- */
+document.querySelectorAll("#rSeg button").forEach(b => b.onclick = () => { ui.rPeriod = b.dataset.p; ui.rAnchor = todayStr(); ui.showAll = false; renderReview(); });
+$("rPrev").onclick = () => { const [a] = range(ui.rPeriod, ui.rAnchor); ui.rAnchor = addDays(a, -1); ui.showAll = false; renderReview(); };
+$("rNext").onclick = () => { const [,b] = range(ui.rPeriod, ui.rAnchor); if (b < todayStr()) { ui.rAnchor = addDays(b, 1); ui.showAll = false; renderReview(); } };
+const avg = arr => arr.length ? arr.reduce((s,x)=>s+x,0)/arr.length : null;
+function overallRate(a, b, hs){ const rs = (hs || L.habits.filter(h=>!h.archived || logsOf(h.id,a,b).length)).map(h=>rate(h,a,b)).filter(r=>r!==null); return rs.length ? avg(rs) : null; }
+
+function renderReview(){
+  const p = ui.rPeriod, [a,b] = range(p, ui.rAnchor), t = todayStr(), end = b < t ? b : t;
+  document.querySelectorAll("#rSeg button").forEach(x => x.classList.toggle("on", x.dataset.p === p));
+  $("rLabel").textContent = periodLabel(p, a, b);
+  $("rNext").style.visibility = b >= t ? "hidden" : "visible";
+  // summary
+  const days = daysIn(a, end);
+  const moods = days.map(d=>(L.checkins[d]||{}).mood).filter(Boolean), ens = days.map(d=>(L.checkins[d]||{}).energy).filter(Boolean);
+  const m = moneyIn(a, b), soc = socStats(a, b);
+  const steps = days.map(d=>(L.health[d]||{}).steps).filter(v=>v!=null);
+  const ov = overallRate(a, b);
+  const am = avg(moods), ae = avg(ens);
+  $("rSummary").innerHTML = `
+    <div class="stat"><span class="label">Habits on target</span><b>${pctTxt(ov)}</b><small>${activeHabits().length} active habits</small></div>
+    <div class="stat"><span class="label">Mood · Energy</span><b>${am?MOODS[Math.round(am)-1]+" "+am.toFixed(1):"—"} · ${ae?"⚡"+ae.toFixed(1):"—"}</b><small>${moods.length} check-in day${moods.length===1?"":"s"}</small></div>
+    <div class="stat"><span class="label">Spent</span><b>${money(m.spent)}</b><small>everyday ${money(m.everyday)}</small></div>
+    <div class="stat"><span class="label">People</span><b>${soc.n}</b><small>${soc.me} by me · ${soc.them} by others</small></div>
+    <div class="stat"><span class="label">Steps / day</span><b>${steps.length?nf.format(Math.round(avg(steps))):"—"}</b><small>${steps.length} day${steps.length===1?"":"s"} with data</small></div>
+    <div class="stat"><span class="label">Goals</span><b>${L.goals.length}</b><small>${L.goals.map(g=>Math.round(goalInfo(g).pct*100)+"%").join(" · ")||"none yet"}</small></div>`;
+  renderMoodCal(p, a, b);
+  renderInsights(end);
+  // categories
+  $("rCats").innerHTML = L.cats.map(c => {
+    const hs = L.habits.filter(h => catById(h.cat).id === c.id && (!h.archived || logsOf(h.id,a,b).length));
+    if (!hs.length) return "";
+    const r = overallRate(a, b, hs), pc = pastel(c.color);
+    return `<button class="rrow" data-rc="${c.id}"><span style="font-size:20px">${c.icon}</span><div><div class="nm">${esc(c.name)} <span class="sub" style="font-weight:500">· ${hs.length} habit${hs.length>1?"s":""}</span></div><div class="rb"><i style="width:${(r||0)*100}%;background:${pc.ink};opacity:.6"></i></div></div><span class="pct">${pctTxt(r)}</span></button>`;
+  }).join("") || `<div class="empty">No habits yet.</div>`;
+  // taxi vs bus
+  const tb = taxiBus(a, b);
+  $("rTaxi").innerHTML = `
+    <div class="stat"><span class="label">🚕 Taxi</span><b>${money(tb.tSum)}</b><small>${tb.tN} ride${tb.tN===1?"":"s"}${tb.avgT?` · avg ${money(tb.avgT)}`:""}</small></div>
+    <div class="stat"><span class="label">🚌 Bus</span><b>${money(tb.bSum)}</b><small>${tb.bN} ride${tb.bN===1?"":"s"}${tb.saved?` · saved ~${money(tb.saved)}`:""}</small></div>`;
+  renderBody(p, a, end);
+  renderAll(a, end);
+}
+function moodCell(d, t, label){
+  const mo = (L.checkins[d]||{}).mood;
+  return `<div class="c ${mo?"has":""} ${d===t?"today":""}" style="${mo?`background:${MOOD_COL[mo-1]}`:""}">${label}</div>`;
+}
+function renderMoodCal(p, a, b){
+  const t = todayStr();
+  let html;
+  if (p === "year"){
+    const y = D(a).getFullYear();
+    html = `<div class="yr">` + [...Array(12)].map((_,mi) => {
+      const dim = new Date(y, mi+1, 0).getDate();
+      return `<span>${new Date(y,mi,1).toLocaleDateString("en-GB",{month:"short"})}</span>` + [...Array(31)].map((_,di) => {
+        if (di >= dim) return `<i style="background:transparent"></i>`;
+        const d = `${y}-${pad(mi+1)}-${pad(di+1)}`, mo = (L.checkins[d]||{}).mood;
+        return `<i style="${mo?`background:${MOOD_COL[mo-1]}`:""}"></i>`;
+      }).join("");
+    }).join("") + `</div>`;
+  } else {
+    const start = range("week", a)[0];
+    html = `<div class="cal">` + ["M","T","W","T","F","S","S"].map(x=>`<div class="dh">${x}</div>`).join("");
+    for (let d = start; d <= b; d = addDays(d,1)) html += d < a ? `<div></div>` : moodCell(d, t, D(d).getDate());
+    html += `</div>`;
+  }
+  html += `<div class="legend">${MOODS.map((m,i)=>`<span><i style="background:${MOOD_COL[i]}"></i>${m}</span>`).join("")}</div>`;
+  $("rCal").innerHTML = html;
+}
+function renderInsights(end){
+  const a = addDays(end, -89);
+  const days = daysIn(a, end).filter(d => L.checkins[d] && (L.checkins[d].mood || L.checkins[d].energy));
+  const out = [];
+  const cmp = (pred, metric, text, filter) => {
+    const yes = [], no = [];
+    days.forEach(d => { const v = L.checkins[d][metric]; if (!v || (filter && !filter(d))) return; (pred(d) ? yes : no).push(v); });
+    if (yes.length >= 4 && no.length >= 4) { const y = avg(yes), n = avg(no); if (Math.abs(y-n) >= 0.3) out.push({w:Math.abs(y-n), html:text(y > n, y, n)}); }
+  };
+  const word = m => m === "mood" ? "mood" : "energy";
+  activeHabits().forEach(h => {
+    const did = d => h.kind === "time" ? onTime(h, logsOf(h.id,d,d).pop()) : logsOf(h.id,d,d).length > 0;
+    ["mood","energy"].forEach(metric => cmp(did, metric, (up,y,n) => `${up?"📈":"📉"} Your ${word(metric)} is <b>${up?"higher":"lower"}</b> on days you do <b>${esc(h.name)}</b> (${y.toFixed(1)} vs ${n.toFixed(1)}).`));
+    if (h.kind === "time") cmp(d => onTime(h, logsOf(h.id, addDays(d,-1), addDays(d,-1)).pop()), "energy", (up,y,n) => `💤 After nights you hit “${esc(h.name)}”, your energy is <b>${up?"higher":"lower"}</b> next day (${y.toFixed(1)} vs ${n.toFixed(1)}).`);
+  });
+  cmp(d => (L.cleanLogs||[]).some(l=>l.date===d), "mood", (up,y,n) => `🧽 On days you clean, your mood is <b>${up?"higher":"lower"}</b> (${y.toFixed(1)} vs ${n.toFixed(1)}).`);
+  cmp(d => L.social.some(s=>s.date===d), "mood", (up,y,n) => `🤝 Your mood is <b>${up?"higher":"lower"}</b> on days with social contact (${y.toFixed(1)} vs ${n.toFixed(1)}).`);
+  cmp(d => L.social.some(s=>s.date===d && s.who==="me"), "mood", (up,y,n) => `💬 On days <b>you</b> reach out first, your mood is ${up?"higher":"lower"} (${y.toFixed(1)} vs ${n.toFixed(1)}).`);
+  cmp(d => (L.health[d].steps||0) >= 7000, "mood", (up,y,n) => `🚶‍♀️ On 7,000+ step days your mood is <b>${up?"higher":"lower"}</b> (${y.toFixed(1)} vs ${n.toFixed(1)}).`, d => L.health[d] && L.health[d].steps != null);
+  cmp(d => (L.health[d].steps||0) >= 7000, "energy", (up,y,n) => `⚡ On 7,000+ step days your energy is <b>${up?"higher":"lower"}</b> (${y.toFixed(1)} vs ${n.toFixed(1)}).`, d => L.health[d] && L.health[d].steps != null);
+  // spending vs energy
+  const low = days.filter(d => L.checkins[d].energy && L.checkins[d].energy <= 2), high = days.filter(d => L.checkins[d].energy >= 4);
+  if (low.length >= 4 && high.length >= 4){
+    const sp = ds => avg(ds.map(d => moneyIn(d,d).everyday));
+    const l = sp(low), h = sp(high);
+    if (Math.abs(l-h) > 500) out.push({w:1, html:`💸 On low-energy days you spend <b>${money(l)}</b> a day on everyday things, vs ${money(h)} on high-energy days.`});
+    const tx = ds => ds.reduce((s,d)=>s+moneyIn(d,d).taxi.length,0)/ds.length;
+    const lt = tx(low), ht = tx(high);
+    if (lt - ht >= 0.3) out.push({w:.8, html:`🚕 You take more taxis on low-energy days (${lt.toFixed(1)} vs ${ht.toFixed(1)} rides a day).`});
+  }
+  out.sort((x,y)=>y.w-x.w);
+  $("rIns").innerHTML = out.slice(0, 6).map(i => `<div class="ins">${i.html}</div>`).join("") ||
+    `<div class="empty">Insights appear once you have about two weeks of mood &amp; energy check-ins alongside your habits.</div>`;
+}
+function svgLine(points, w=320, h=110, color="#7c6fd6"){
+  if (points.length < 2) return "";
+  const xs = points.map(p=>p.x), ys = points.map(p=>p.y);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys) - .5, y1 = Math.max(...ys) + .5;
+  const X = x => 8 + (x - x0) / ((x1 - x0) || 1) * (w - 16), Y = y => h - 18 - (y - y0) / ((y1 - y0) || 1) * (h - 30);
+  const path = points.map((p,i) => `${i?"L":"M"}${X(p.x).toFixed(1)},${Y(p.y).toFixed(1)}`).join(" ");
+  return `<div class="svgwrap"><svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}"><path d="${path}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>` +
+    points.map(p => `<circle cx="${X(p.x).toFixed(1)}" cy="${Y(p.y).toFixed(1)}" r="3" fill="${color}"/>`).join("") +
+    `<text x="8" y="${h-3}" font-size="10" fill="#8b8697">${points[0].label}</text><text x="${w-8}" y="${h-3}" font-size="10" fill="#8b8697" text-anchor="end">${points[points.length-1].label}</text></svg></div>`;
+}
+function renderBody(p, a, end){
+  const wa = p === "week" ? addDays(end, -29) : a;
+  const ws = daysIn(wa, end).filter(d => L.health[d] && L.health[d].kg).map(d => ({x:D(d).getTime(), y:L.health[d].kg, label:fmtDay(d,{day:"numeric",month:"short"})}));
+  let html = `<div class="label">Weight${p==="week"?" (last 30 days)":""}</div>`;
+  if (ws.length >= 2){ const ch = ws[ws.length-1].y - ws[0].y; html += `<div class="sub">${ws[ws.length-1].y} kg now · ${ch>0?"+":""}${ch.toFixed(1)} kg over this period</div>` + svgLine(ws); }
+  else html += `<div class="sub" style="margin-bottom:10px">${ws.length?`${ws[0].y} kg on ${ws[0].label}`:"No weight entries yet."}</div>`;
+  // steps bars
+  let cols;
+  if (p === "year") cols = [...Array(12)].map((_,i) => { const y = D(a).getFullYear(); const [s,e] = range("month", `${y}-${pad(i+1)}-01`); const v = daysIn(s, e < end ? e : end).map(d=>(L.health[d]||{}).steps).filter(x=>x!=null); return {l:new Date(y,i,1).toLocaleDateString("en-GB",{month:"narrow"}), v: v.length ? avg(v) : 0}; });
+  else cols = daysIn(a, end).map(d => ({l: p === "week" ? fmtDay(d,{weekday:"narrow"}) : (D(d).getDate()%5===1 ? D(d).getDate() : ""), v:(L.health[d]||{}).steps||0}));
+  const mx = Math.max(1, ...cols.map(c=>c.v));
+  html += `<div class="label" style="margin-top:12px">Steps${p==="year"?" (daily average per month)":""}</div>`;
+  html += cols.some(c=>c.v) ? `<div class="trend lav" style="gap:${p==="month"?2:6}px">${cols.map(c => `<div class="col"><div class="v">${p==="week"&&c.v?short(c.v):""}</div><div class="b" style="height:${c.v/mx*70}%"></div><div class="m">${c.l}</div></div>`).join("")}</div>` : `<div class="sub">No steps imported yet.</div>`;
+  $("rBody").innerHTML = html;
+}
+function dayEntries(d){
+  const out = [];
+  const c = L.checkins[d];
+  if (c && (c.mood || c.energy)) out.push({i: c.mood ? MOODS[c.mood-1] : "⚡", t:"Check-in", v:[c.mood?`mood ${c.mood}/5`:"", c.energy?`energy ${c.energy}/5`:""].filter(Boolean).join(" · ")});
+  const byH = {};
+  L.logs.filter(l=>l.date===d).forEach(l => { (byH[l.habit] = byH[l.habit] || []).push(l); });
+  Object.entries(byH).forEach(([hid, ls]) => {
+    const h = habById(hid); if (!h) return;
+    const c2 = catById(h.cat);
+    const v = h.kind === "time" ? `${ls[ls.length-1].time}${onTime(h, ls[ls.length-1])?" ✓":" late"}` : h.kind === "duration" ? fmtMin(ls.reduce((s,l)=>s+(Number(l.value)||0),0)) : `${ls.reduce((s,l)=>s+(Number(l.value)||0),0)}×`;
+    out.push({i:c2.icon, t:esc(h.name), v});
+  });
+  L.social.filter(s=>s.date===d).forEach(s => { const ty = SOC_TYPES.find(y=>y.id===s.type)||SOC_TYPES[0]; out.push({i:FEEL[(s.feel||2)-1], t:`${ty.l} · ${s.ctx==="work"?"work":"personal"}${s.note?" · "+esc(s.note):""}`, v: s.who==="me"?"by me":"by them"}); });
+  (L.cleanLogs||[]).filter(l=>l.date===d).forEach(l => { const c = (L.chores||[]).find(x=>x.id===l.chore); if (c) out.push({i:"🧽", t:`Cleaning: ${esc(c.name)}`, v:l.mins?fmtMin(l.mins):"done"}); });
+  L.goals.forEach(g => (g.milestones||[]).filter(m=>m.done && m.doneDate===d).forEach(m => out.push({i:"🎯", t:`${esc(g.name)}: ${esc(m.text)}`, v:"done"})));
+  const h = L.health[d];
+  if (h && (h.steps != null || h.kg)) out.push({i:"🚶‍♀️", t:"Body", v:[h.steps!=null?nf.format(h.steps)+" steps":"", h.km!=null?h.km+" km":"", h.kg?h.kg+" kg":""].filter(Boolean).join(" · ")});
+  const m = moneyIn(d, d);
+  if (m.tx.length){
+    const inc = m.tx.filter(t=>t.type==="income").reduce((s,t)=>s+t.amount,0);
+    out.push({i:"💳", t:`Money · ${m.tx.length} entr${m.tx.length>1?"ies":"y"}`, v:[m.spent?"−"+money(m.spent):"", inc?"+"+money(inc):""].filter(Boolean).join(" ")||"transfers"});
+  }
+  return out;
+}
+function renderAll(a, end){
+  const days = daysIn(a, end).reverse().map(d => [d, dayEntries(d)]).filter(([,e]) => e.length);
+  const shown = ui.showAll ? days : days.slice(0, 10);
+  let html = shown.map(([d,es]) => `<div class="day"><span>${d===todayStr()?"Today":fmtDay(d)}</span></div>` +
+    es.map(e => `<div class="entry"><span class="ei">${e.i}</span><span class="et">${e.t}</span><span class="ev">${e.v}</span></div>`).join("")).join("");
+  if (days.length > shown.length) html += `<div class="actions"><button class="btn ghost" id="showAllBtn">Show all ${days.length} days</button></div>`;
+  $("rAll").innerHTML = html || `<div class="empty">Nothing logged in this period yet.</div>`;
+  const sb = $("showAllBtn"); if (sb) sb.onclick = () => { ui.showAll = true; renderAll(a, end); };
+}
+
+/* ---------- reports ---------- */
+$("rCats").onclick = e => { const b = e.target.closest("[data-rc]"); if (b) { ui.repStack = []; openCatReport(b.dataset.rc); } };
+$("repBack").onclick = () => { const prev = ui.repStack.pop(); if (prev) { if (prev.type === "cat") openCatReport(prev.id, true); } };
+function lastPeriods(n){
+  const out = []; let anchor = ui.rAnchor;
+  for (let i = 0; i < n; i++){ const r = range(ui.rPeriod, anchor); out.unshift(r); anchor = addDays(r[0], -1); }
+  return out;
+}
+const shortPeriod = (p, s) => p === "week" ? fmtDay(s,{day:"numeric",month:"short"}) : p === "month" ? D(s).toLocaleDateString("en-GB",{month:"short"}) : String(D(s).getFullYear());
+function trendBars(vals){
+  return `<div class="trend lav">${vals.map((v,i) => `<div class="col ${i===vals.length-1?"sel":""}"><div class="v">${v.r===null?"":Math.round(v.r*100)+"%"}</div><div class="b" style="height:${(v.r||0)*70}%"></div><div class="m">${v.l}</div></div>`).join("")}</div>`;
+}
+function openCatReport(cid, back){
+  const c = catById(cid), [a,b] = range(ui.rPeriod, ui.rAnchor), p = pastel(c.color);
+  const hs = L.habits.filter(h => catById(h.cat).id === c.id && (!h.archived || logsOf(h.id,a,b).length));
+  const trend = lastPeriods(6).map(([s,e]) => ({l:shortPeriod(ui.rPeriod, s), r: overallRate(s, e, hs)}));
+  $("repBody").innerHTML = `<h2 style="font-size:20px">${c.icon} ${esc(c.name)}</h2><div class="sub" style="margin:-8px 0 14px">${periodLabel(ui.rPeriod, a, b)}</div>
+    <div class="stats"><div class="stat"><span class="label">On target</span><b>${pctTxt(overallRate(a,b,hs))}</b></div><div class="stat"><span class="label">Habits</span><b>${hs.length}</b></div></div>
+    <div class="label" style="margin:16px 0 4px">Trend</div>${trendBars(trend)}
+    <div class="label" style="margin:16px 0 4px">Habits</div>` +
+    (hs.map(h => { const r = rate(h,a,b), st = streaks(h); return `<button class="rrow" data-rh="${h.id}"><span style="font-size:18px">${h.archived?"🗄️":"•"}</span><div><div class="nm">${esc(h.name)}</div><div class="sub" style="margin-top:2px">${targetText(h)} · streak ${st.cur}</div><div class="rb"><i style="width:${(r||0)*100}%;background:${p.ink};opacity:.6"></i></div></div><span class="pct">${pctTxt(r)}</span></button>`; }).join("") || `<div class="empty">No habits in this category.</div>`);
+  $("repBack").hidden = true;
+  $("repBody").onclick = e => { const x = e.target.closest("[data-rh]"); if (x) { ui.repStack.push({type:"cat", id:cid}); openHabitReport(x.dataset.rh); } };
+  if (!back) openSheet($("repSheet")); else $("repSheet").scrollTop = 0;
+}
+function openHabitReport(hid){
+  const h = habById(hid); if (!h) return;
+  const [a,b] = range(ui.view === "review" ? ui.rPeriod : "month", ui.view === "review" ? ui.rAnchor : todayStr());
+  const rp = ui.view === "review" ? ui.rPeriod : "month";
+  const c = catById(h.cat), p = pastel(c.color), st = streaks(h), us = unitsFor(h, a, b), r = rate(h, a, b);
+  const ls = logsOf(h.id, a, b);
+  let extra = "";
+  if (h.kind === "time"){
+    const tl = ls.filter(l=>l.time); const mins = tl.map(l=>minsNorm(l.time, h.time));
+    const av = avg(mins); const avs = av === null ? "—" : `${pad(Math.floor(av/60)%24)}:${pad(Math.round(av)%60)}`;
+    extra = `<div class="stat"><span class="label">Average time</span><b>${avs}</b><small>${tl.filter(l=>onTime(h,l)).length} of ${tl.length} on time</small></div>`;
+  } else if (h.kind === "duration"){
+    const tot = ls.reduce((s,l)=>s+(Number(l.value)||0),0);
+    extra = `<div class="stat"><span class="label">Total time</span><b>${fmtMin(tot)}</b><small>${us.length?fmtMin(tot/us.length):"—"} per ${PER_LBL[h.period]}</small></div>`;
+  } else {
+    const tot = ls.reduce((s,l)=>s+(Number(l.value)||0),0);
+    extra = `<div class="stat"><span class="label">Total</span><b>${tot}×</b><small>${us.length?(tot/us.length).toFixed(1):"—"} per ${PER_LBL[h.period]}</small></div>`;
+  }
+  let detail;
+  if (perOf(h) === "day"){
+    const start = range("week", a)[0], t = todayStr();
+    detail = `<div class="cal">` + ["M","T","W","T","F","S","S"].map(x=>`<div class="dh">${x}</div>`).join("");
+    if (rp === "year") detail = "";
+    else {
+      for (let d = start; d <= b; d = addDays(d,1)) {
+        if (d < a) { detail += `<div></div>`; continue; }
+        const pr = progress(h, d, d), partial = !pr.met && pr.val > 0;
+        detail += `<div class="c ${pr.met||partial?"has":""} ${d===t?"today":""}" style="${pr.met?`background:${p.bg};color:${p.ink}`:partial?"background:var(--butter)":""}">${D(d).getDate()}</div>`;
+      }
+      detail += `</div><div class="legend"><span><i style="background:${p.bg}"></i>on target</span><span><i style="background:var(--butter)"></i>partly</span></div>`;
+    }
+    if (rp === "year") detail = trendBars([...Array(12)].map((_,i) => { const y = D(a).getFullYear(); const [s,e] = range("month", `${y}-${pad(i+1)}-01`); return {l:new Date(y,i,1).toLocaleDateString("en-GB",{month:"narrow"}), r: rate(h,s,e)}; }));
+  } else {
+    detail = us.slice().reverse().map(u => `<div class="entry"><span class="ei">${u.met?"✅":u.ongoing?"⏳":"▫️"}</span><span class="et">${unitLabel(perOf(h), u.s)}</span><span class="ev">${h.kind==="duration"?fmtMin(u.val)+" / "+fmtMin(u.target):u.val+" / "+u.target}</span></div>`).join("") || `<div class="empty">No periods yet.</div>`;
+  }
+  const trend = (ui.view === "review" ? lastPeriods(6) : [...Array(6)].map((_,i)=>range("month", shiftMonth(monthOf(todayStr()), i-5)+"-01"))).map(([s,e]) => ({l:shortPeriod(rp, s), r: rate(h, s, e)}));
+  $("repBody").innerHTML = `<h2 style="font-size:20px">${esc(h.name)}${h.archived?" <small style='color:var(--muted)'>(archived)</small>":""}</h2>
+    <div class="sub" style="margin:-8px 0 14px">${c.icon} ${esc(c.name)} · ${targetText(h)} · ${periodLabel(rp, a, b)}</div>
+    <div class="stats">
+      <div class="stat"><span class="label">On target</span><b>${pctTxt(r)}</b><small>${us.filter(u=>u.met).length} of ${us.filter(u=>!u.ongoing||u.met).length} ${PER_LBL[perOf(h)]}s</small></div>
+      <div class="stat"><span class="label">Streak</span><b>${st.cur}</b><small>best ${st.best}</small></div>
+      ${extra}
+      <div class="stat"><span class="label">Since</span><b style="font-size:16px">${fmtDay(h.created||todayStr(),{day:"numeric",month:"short",year:"numeric"})}</b></div>
+    </div>
+    <div class="label" style="margin:16px 0 6px">Details</div>${detail}
+    <div class="label" style="margin:16px 0 4px">Trend</div>${trendBars(trend)}
+    <div class="actions" style="margin-top:12px"><button class="btn ghost" id="repEdit">Edit habit</button></div>`;
+  $("repBody").onclick = null;
+  $("repEdit").onclick = () => openHabForm(h.id);
+  $("repBack").hidden = !ui.repStack.length;
+  if (!$("repSheet").classList.contains("open")) openSheet($("repSheet")); else $("repSheet").scrollTop = 0;
+}
+
+/* ---------- backup & export (Money + Life) ---------- */
+$("exportBtn").onclick = async () => {
+  const data = JSON.stringify({app:"mymoney", version:3, exported:new Date().toISOString(), budget:state.budget, accounts:state.accounts, tx:state.tx, life:L});
+  if (await shareOrDownload(`my-money-life-backup-${todayStr()}.json`, data, "application/json")) {
+    state.lastBackup = Date.now(); persist(); closeSheet(); toast("Backup ready — save it to Files");
+  }
+};
+$("importFile").onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ""; if (!f) return;
+  try {
+    const d = JSON.parse(await f.text());
+    if (d.app !== "mymoney" || !Array.isArray(d.tx)) throw 0;
+    if (Array.isArray(d.accounts)) { const have = new Set(state.accounts.map(a=>a.id)); d.accounts.forEach(a => { if (a && a.id && !have.has(a.id)) state.accounts.push(a); }); }
+    const have = new Set(state.tx.map(t=>t.id)); let added = 0;
+    d.tx.forEach(t => { if (t && t.id && !have.has(t.id) && t.date && typeof t.amount === "number") { if (!t.acc) t.acc = "kaspi"; state.tx.push(t); added++; } });
+    if (!state.budget && d.budget) state.budget = Number(d.budget)||0;
+    persist();
+    if (d.life && typeof d.life === "object") {
+      const lf = d.life;
+      ["cats","habits","logs","social","goals","rooms","chores","cleanLogs"].forEach(k => { if (!Array.isArray(L[k])) L[k] = []; if (Array.isArray(lf[k])) { const ids = new Set(L[k].map(x=>x.id)); lf[k].forEach(x => { if (x && x.id && !ids.has(x.id)) { L[k].push(x); if (k==="logs"||k==="social") added++; } }); } });
+      ["checkins","health"].forEach(k => { if (lf[k]) Object.entries(lf[k]).forEach(([day,v]) => { if (!L[k][day]) L[k][day] = v; }); });
+      lsave();
+    }
+    closeSheet(); render(); rerender(); toast(`Restored ${added} entr${added===1?"y":"ies"}`);
+  } catch { toast("That isn't a My Money backup file"); }
+};
+$("lifeCsvBtn").onclick = () => {
+  const q = s => `"${String(s ?? "").replace(/"/g,'""')}"`;
+  const rows = ["date,kind,item,category,value,details"];
+  L.logs.slice().sort((x,y)=>x.date.localeCompare(y.date)).forEach(l => { const h = habById(l.habit); if (!h) return;
+    rows.push([l.date,"habit",q(h.name),q(catById(h.cat).name), h.kind==="time"?q(l.time):h.kind==="duration"?l.value:l.value, q(h.kind==="duration"?"minutes":h.kind==="time"?(onTime(h,l)?"on time":"late"):"times")].join(",")); });
+  Object.keys(L.checkins).sort().forEach(d => { const c = L.checkins[d]; if (c.mood) rows.push([d,"mood","Mood","",c.mood,""].join(",")); if (c.energy) rows.push([d,"energy","Energy","",c.energy,""].join(",")); });
+  L.social.slice().sort((x,y)=>x.date.localeCompare(y.date)).forEach(s => rows.push([s.date,"social",q(s.type),q(s.ctx),s.feel||"",q(`${s.who==="me"?"started by me":"started by them"}${s.note?" · "+s.note:""}`)].join(",")));
+  Object.keys(L.health).sort().forEach(d => { const h = L.health[d]; if (h.steps!=null) rows.push([d,"health","Steps","",h.steps,""].join(",")); if (h.km!=null) rows.push([d,"health","Distance km","",h.km,""].join(",")); if (h.kg) rows.push([d,"health","Weight kg","",h.kg,""].join(",")); });
+  shareOrDownload(`my-life-${todayStr()}.csv`, "﻿" + rows.join("\n"), "text/csv");
+};
+$("allCsvBtn").onclick = () => {
+  const q = s => `"${String(s ?? "").replace(/"/g,'""')}"`;
+  const catName = t => t.type==="transfer" ? "Transfer" : t.type==="adjust" ? "Balance correction" : ((CAT_BY_ID[t.cat]||{}).label||t.cat);
+  const rows = state.tx.slice().sort((a,b)=>a.date.localeCompare(b.date));
+  const csv = ["date,type,category,account,to_account,amount,fee,loan,principal,note",
+    ...rows.map(t=>[t.date,t.type,q(catName(t)),q(accLabel(t.acc)),q(t.to?accLabel(t.to):""),t.amount,t.fee||0,q(t.loan?accLabel(t.loan):""),t.principal||0,q(t.note)].join(","))].join("\n");
+  shareOrDownload(`my-money-all-${todayStr()}.csv`, "﻿"+csv, "text/csv");
+};
+$("quickBackup").onclick = () => $("exportBtn").onclick();
+
+/* ---------- start ---------- */
+lload();
+
+/* ===================== HEALTH ===================== */
+const hui = { per:"week" };
+const catArea = c => c.area || "life";
+function migrateAreas(){
+  if (L.migV >= 2) return;
+  if (!L.cats.some(c=>c.id==="eating")) L.cats.push({id:"eating", name:"Eating", icon:"🍎", color:"peach", area:"health"});
+  if (!L.cats.some(c=>c.id==="exercise")) L.cats.push({id:"exercise", name:"Exercise", icon:"🏃‍♀️", color:"sky", area:"health"});
+  const old = L.cats.find(c=>c.id==="health");
+  if (old) {
+    L.habits.forEach(h => { if (h.cat === "health" && h.kind !== "time") h.cat = "exercise"; });
+    if (L.habits.some(h=>h.cat==="health")) Object.assign(old, {name:"Sleep", icon:"💤", color:"lav", area:"life"});
+    else L.cats = L.cats.filter(c=>c!==old);
+  }
+  const cl = L.cats.find(c=>c.id==="cleaning");
+  if (cl && !L.habits.some(h=>h.cat==="cleaning")) L.cats = L.cats.filter(c=>c!==cl);
+  L.migV = 2; lsave();
+}
+function rerender(){ if (tab === "health") renderHealth(); else if (tab === "clean") renderClean(); else if (tab === "life") renderLife(); else render(); }
+
+function renderHealth(){
+  const d = ui.day, t = todayStr();
+  $("hLabel").textContent = d === t ? "Today" : d === addDays(t,-1) ? "Yesterday" : fmtDay(d);
+  $("hNext").style.visibility = d >= t ? "hidden" : "visible";
+  renderTimer();
+  // weight
+  const ws = Object.keys(L.health).filter(k => k <= d && L.health[k].kg).sort();
+  const last = ws[ws.length-1];
+  const since = n => { const ref = ws.filter(k => k <= addDays(last, -n)).pop(); return ref ? L.health[last].kg - L.health[ref].kg : null; };
+  const ch7 = last ? since(7) : null, ch30 = last ? since(30) : null;
+  const fmtCh = v => v === null ? "—" : `${v>0?"+":""}${v.toFixed(1)} kg`;
+  const pts = ws.filter(k => k >= addDays(d, -89)).map(k => ({x:D(k).getTime(), y:L.health[k].kg, label:fmtDay(k,{day:"numeric",month:"short"})}));
+  $("hWeight").innerHTML = last ? `<div class="big2" style="margin-bottom:2px">${L.health[last].kg} kg</div>
+      <div class="sub" style="margin:0 0 8px">${last===d?"":"last entry "+fmtDay(last)+" · "}7 days: ${fmtCh(ch7)} · 30 days: ${fmtCh(ch30)}</div>${pts.length >= 2 ? svgLine(pts, 320, 110, "#3f9f84") : ""}`
+    : `<div class="sub" style="margin:0">No weight yet — tap “+ Enter weight” or import from Health.</div>`;
+  // steps
+  const hd = L.health[d] || {};
+  const wk = daysIn(addDays(d,-6), d).map(x => (L.health[x]||{}).steps).filter(v=>v!=null);
+  $("bodyStats").innerHTML = `
+    <div class="stat"><span class="label">Steps</span><b>${hd.steps!=null?nf.format(hd.steps):"—"}</b><small>${hd.km!=null?hd.km+" km":"&nbsp;"}</small></div>
+    <div class="stat"><span class="label">7-day average</span><b>${wk.length?nf.format(Math.round(avg(wk))):"—"}</b><small>${wk.length} day${wk.length===1?"":"s"} with data</small></div>`;
+  // habits
+  $("hHabitCards").innerHTML = habitCardsHtml("health", d) || `<div class="card empty">No eating or exercise habits yet — tap “Manage habits” to add one.</div>`;
+  // progress
+  document.querySelectorAll("#hPer button").forEach(b => b.classList.toggle("on", b.dataset.p === hui.per));
+  const [a, b] = range(hui.per, t);
+  const cats = L.cats.filter(c => catArea(c) === "health");
+  const hs = L.habits.filter(h => cats.some(c=>c.id===catById(h.cat).id) && (!h.archived || logsOf(h.id,a,b).length));
+  const ex = L.habits.filter(h => catById(h.cat).id === "exercise" && h.kind === "duration");
+  const exMin = ex.reduce((s,h)=>s+logsOf(h.id,a,b).reduce((x,l)=>x+(Number(l.value)||0),0),0);
+  const exDays = new Set(L.logs.filter(l => l.date>=a && l.date<=b && hs.some(h=>h.id===l.habit && catById(h.cat).id==="exercise")).map(l=>l.date)).size;
+  const steps = daysIn(a, b < t ? b : t).map(x => (L.health[x]||{}).steps).filter(v=>v!=null);
+  $("hStats").innerHTML = `
+    <div class="stat"><span class="label">Habits on target</span><b>${pctTxt(overallRate(a, b, hs))}</b><small>${hs.length} health habit${hs.length===1?"":"s"}</small></div>
+    <div class="stat"><span class="label">Exercise</span><b>${exMin?fmtMin(exMin):"—"}</b><small>${exDays} active day${exDays===1?"":"s"}</small></div>
+    <div class="stat"><span class="label">Steps / day</span><b>${steps.length?nf.format(Math.round(avg(steps))):"—"}</b><small>${steps.length?nf.format(steps.reduce((s,x)=>s+x,0))+" total":"no data"}</small></div>
+    <div class="stat"><span class="label">Weight change</span><b>${(() => { const w = Object.keys(L.health).filter(k=>k>=a && k<=b && L.health[k].kg).sort(); return w.length>=2 ? fmtCh(L.health[w[w.length-1]].kg - L.health[w[0]].kg) : "—"; })()}</b><small>${PER_NOW[hui.per]}</small></div>`;
+  $("hCats").innerHTML = cats.map(c => {
+    const ch = hs.filter(h => catById(h.cat).id === c.id); if (!ch.length) return "";
+    const r = overallRate(a, b, ch), p = pastel(c.color);
+    return `<button class="rrow" data-rc="${c.id}"><span style="font-size:20px">${c.icon}</span><div><div class="nm">${esc(c.name)}</div><div class="rb"><i style="width:${(r||0)*100}%;background:${p.ink};opacity:.6"></i></div></div><span class="pct">${pctTxt(r)}</span></button>`;
+  }).join("");
+}
+$("hPrev").onclick = () => { ui.day = addDays(ui.day, -1); renderHealth(); };
+$("hNext").onclick = () => { if (ui.day < todayStr()) { ui.day = addDays(ui.day, 1); renderHealth(); } };
+document.querySelectorAll("#hPer button").forEach(b => b.onclick = () => { hui.per = b.dataset.p; renderHealth(); });
+$("hManageBtn").onclick = () => openManager();
+$("hCats").onclick = e => { const b = e.target.closest("[data-rc]"); if (!b) return; ui.repStack = []; const keep = [ui.rPeriod, ui.rAnchor]; ui.rPeriod = hui.per; ui.rAnchor = todayStr(); openCatReport(b.dataset.rc); [ui.rPeriod, ui.rAnchor] = keep; };
+$("openSettings4").onclick = () => $("openSettings").onclick();
+
+/* ===================== CLEANING ===================== */
+const ROOM_ICONS = ["🍳","🛁","🛏️","🛋️","🚪","🏠","🧺","🪟","🌿","🧸","💻","🚗"];
+const DEFAULT_ROOMS = [
+  {id:"kitchen",name:"Kitchen",icon:"🍳"},{id:"bathroom",name:"Bathroom",icon:"🛁"},{id:"bedroom",name:"Bedroom",icon:"🛏️"},
+  {id:"living",name:"Living room",icon:"🛋️"},{id:"hallway",name:"Hallway",icon:"🚪"},{id:"whole",name:"Whole apartment",icon:"🏠"}
+];
+const CHORE_IDEAS = ["Wipe dust","Vacuum","Mop floors","Change bed sheets","Clean bathroom","Clean toilet","Clean stove","Clean fridge","Clean microwave","Wash windows","Water plants","Take out trash","Do laundry","Descale kettle"];
+const UNIT_LBL = {day:["day","days"],week:["week","weeks"],month:["month","months"]};
+const cui = { view:"todo", openRooms:{} };
+
+function ensureCleaning(){
+  if (!Array.isArray(L.rooms) || !L.rooms.length) L.rooms = DEFAULT_ROOMS.map(r=>({...r}));
+  if (!Array.isArray(L.chores)) L.chores = [];
+  if (!Array.isArray(L.cleanLogs)) L.cleanLogs = [];
+}
+const roomById = id => L.rooms.find(r=>r.id===id) || {id, name:"Other", icon:"🏠"};
+const choreById = id => L.chores.find(c=>c.id===id);
+function addInterval(s, n, unit){
+  const d = D(s);
+  if (unit === "day") d.setDate(d.getDate()+n);
+  else if (unit === "week") d.setDate(d.getDate()+7*n);
+  else { const day = d.getDate(); d.setDate(1); d.setMonth(d.getMonth()+n); d.setDate(Math.min(day, new Date(d.getFullYear(), d.getMonth()+1, 0).getDate())); }
+  return S(d);
+}
+const dayDiff = (a, b) => Math.round((D(b) - D(a)) / 864e5);
+const everyText = c => c.every === 1 ? `every ${UNIT_LBL[c.unit][0]}` : `every ${c.every} ${UNIT_LBL[c.unit][1]}`;
+function choreState(c){
+  const ls = L.cleanLogs.filter(l=>l.chore===c.id).map(l=>l.date).sort();
+  const last = ls.length ? ls[ls.length-1] : (c.lastBefore || null);
+  const t = todayStr();
+  if (!last) return {last:null, next:t, left:0, status:"new", label:"Not done yet"};
+  const next = addInterval(last, c.every, c.unit), left = dayDiff(t, next);
+  const span = Math.max(1, dayDiff(last, next));
+  const status = left < 0 ? "over" : left === 0 ? "today" : (left <= Math.max(1, Math.round(span*0.2))) ? "soon" : "ok";
+  const label = left < 0 ? `${-left} day${left===-1?"":"s"} overdue` : left === 0 ? "Due today" : left === 1 ? "Due tomorrow" : `In ${left} days`;
+  return {last, next, left, status, label};
+}
+const ST_COL = {over:{bg:"#fde1dc",ink:"#c95a47"}, today:{bg:"#ffe9c9",ink:"#b9772a"}, new:{bg:"#ffe9c9",ink:"#b9772a"}, soon:{bg:"#fff3c9",ink:"#a8841f"}, ok:{bg:"#d4f1e4",ink:"#2f8a6a"}};
+
+function choreRow(c){
+  const st = choreState(c), col = ST_COL[st.status], r = roomById(c.room);
+  return `<div class="hrow" data-ch="${c.id}" style="background:var(--bg)">
+    <button class="hname" data-act="open"><b>${r.icon} ${esc(c.name)}</b><small>${everyText(c)}${st.last?` · last ${fmtDay(st.last,{day:"numeric",month:"short"})}`:""}${c.mins?` · ~${c.mins} min`:""}</small>
+      <small><span class="mini-chip" style="background:${col.bg};color:${col.ink};margin:4px 0 0">${st.label}</span></small></button>
+    <div class="hctl"><button class="round plus" data-act="done" aria-label="Done today">✓</button></div></div>`;
+}
+function renderClean(){
+  ensureCleaning();
+  document.querySelectorAll("#clSeg button").forEach(b => b.classList.toggle("on", b.dataset.v === cui.view));
+  ["todo","rooms","history"].forEach(v => $("cl-"+v).hidden = cui.view !== v);
+  const sts = L.chores.map(c => ({c, st:choreState(c)}));
+  const upToDate = sts.filter(x => x.st.status === "ok" || x.st.status === "soon").length;
+  const pct = L.chores.length ? upToDate / L.chores.length : 0;
+  const [wa, wb] = range("week", todayStr());
+  const wl = L.cleanLogs.filter(l=>l.date>=wa && l.date<=wb);
+  const wm = wl.reduce((s,l)=>s+(Number(l.mins)||0),0);
+  $("clScore").textContent = L.chores.length ? Math.round(pct*100) + "%" : "—";
+  $("clBar").style.width = pct*100 + "%";
+  const over = sts.filter(x=>x.st.status==="over").length;
+  $("clScoreTxt").textContent = L.chores.length ? `${upToDate} of ${L.chores.length} chores fresh${over?` · ${over} overdue`:""} · ${wl.length} done this week${wm?` (${fmtMin(wm)})`:""}` : "Add your chores one by one — the app will build your routine.";
+  if (cui.view === "todo") renderTodo(sts);
+  else if (cui.view === "rooms") renderRooms();
+  else renderCleanHistory();
+}
+function renderTodo(sts){
+  if (!sts.length){ $("cl-todo").innerHTML = `<div class="card empty">No chores yet. Tap “+ Chore” to add your first, e.g. “Wipe dust every week”.</div>`; return; }
+  sts.sort((a,b) => a.st.left - b.st.left);
+  const groups = [
+    ["Overdue", sts.filter(x=>x.st.left < 0)],
+    ["Today", sts.filter(x=>x.st.left === 0)],
+    ["Next 7 days", sts.filter(x=>x.st.left >= 1 && x.st.left <= 7)],
+    ["Later", sts.filter(x=>x.st.left > 7)]
+  ];
+  $("cl-todo").innerHTML = groups.filter(g=>g[1].length).map(([name, xs]) => {
+    const mins = xs.reduce((s,x)=>s+(Number(x.c.mins)||0),0);
+    return `<div class="catcard"><div class="cathead">${name}<span class="pill" style="background:var(--bg);color:var(--muted)">${xs.length}${mins&&name!=="Later"?` · ~${fmtMin(mins)}`:""}</span></div>${xs.map(x=>choreRow(x.c)).join("")}</div>`;
+  }).join("");
+}
+function renderRooms(){
+  $("cl-rooms").innerHTML = L.rooms.map(r => {
+    const cs = L.chores.filter(c=>c.room===r.id);
+    const sts = cs.map(choreState);
+    const fresh = sts.filter(s=>s.status==="ok"||s.status==="soon").length;
+    return `<div class="catcard"><div class="cathead"><span>${r.icon}</span>${esc(r.name)}<span class="pill" style="background:var(--bg);color:var(--muted)">${cs.length?`${fresh}/${cs.length} fresh`:"no chores"}</span><button class="link" data-room="${r.id}" style="margin-left:6px">Edit</button></div>
+      ${cs.map(choreRow).join("")}
+      <div style="text-align:center;padding:2px 0 8px"><button class="link" data-addin="${r.id}">+ Chore in ${esc(r.name)}</button></div></div>`;
+  }).join("");
+}
+function renderCleanHistory(){
+  const t = todayStr(), [ma, mb] = range("month", t), [wa, wb] = range("week", t);
+  const ml = L.cleanLogs.filter(l=>l.date>=ma && l.date<=mb), wl = L.cleanLogs.filter(l=>l.date>=wa && l.date<=wb);
+  const mins = ls => ls.reduce((s,l)=>s+(Number(l.mins)||0),0);
+  const byRoom = {};
+  ml.forEach(l => { const c = choreById(l.chore); const rid = c ? c.room : "?"; byRoom[rid] = (byRoom[rid]||0) + 1; });
+  const mx = Math.max(1, ...Object.values(byRoom));
+  let html = `<div class="card"><div class="stats">
+    <div class="stat"><span class="label">This week</span><b>${wl.length}</b><small>chores${mins(wl)?` · ${fmtMin(mins(wl))}`:""}</small></div>
+    <div class="stat"><span class="label">This month</span><b>${ml.length}</b><small>chores${mins(ml)?` · ${fmtMin(mins(ml))}`:""}</small></div></div>
+    ${Object.keys(byRoom).length ? `<div class="label" style="margin:14px 0 2px">By room this month</div>` + Object.entries(byRoom).sort((a,b)=>b[1]-a[1]).map(([rid,n]) => { const r = roomById(rid); return `<div class="cat"><div class="ic">${r.icon}</div><div><div class="nm">${esc(r.name)}</div><div class="cb"><i style="width:${n/mx*100}%;background:#6b9fd0"></i></div></div><div class="am">${n}</div></div>`; }).join("") : ""}</div>`;
+  const list = L.cleanLogs.slice().sort((a,b)=>b.date.localeCompare(a.date) || (b.ts||0)-(a.ts||0)).slice(0, 80);
+  let cur = null, items = "";
+  list.forEach(l => {
+    const c = choreById(l.chore); if (!c) return;
+    if (l.date !== cur) { cur = l.date; items += `<div class="day"><span>${l.date===t?"Today":fmtDay(l.date)}</span></div>`; }
+    items += `<div class="entry"><span class="ei">${roomById(c.room).icon}</span><span class="et">${esc(c.name)}</span><span class="ev">${l.mins?fmtMin(l.mins):""}</span></div>`;
+  });
+  html += `<div class="card"><h2>Done</h2>${items || `<div class="empty">Nothing marked done yet.</div>`}</div>`;
+  $("cl-history").innerHTML = html;
+}
+
+function markDone(cid, date){
+  const c = choreById(cid); if (!c) return;
+  date = date || todayStr();
+  if (L.cleanLogs.some(l=>l.chore===cid && l.date===date)) { toast("Already marked done that day"); return false; }
+  L.cleanLogs.push({id:newId(), chore:cid, date, mins:Number(c.mins)||0, ts:Date.now()});
+  lsave();
+  const st = choreState(c);
+  toast(`✨ ${c.name} done — next ${st.left<=0?"now":fmtDay(st.next,{day:"numeric",month:"short"})}`);
+  return true;
+}
+document.querySelectorAll("#clSeg button").forEach(b => b.onclick = () => { cui.view = b.dataset.v; renderClean(); });
+$("cleanView").addEventListener("click", e => {
+  const a = e.target.closest("[data-act]"), rm = e.target.closest("[data-room]"), ad = e.target.closest("[data-addin]");
+  if (rm) { openRoomForm(rm.dataset.room); return; }
+  if (ad) { openChoreForm(null, ad.dataset.addin); return; }
+  if (!a) return;
+  const row = a.closest("[data-ch]"); if (!row) return;
+  if (a.dataset.act === "done") { if (markDone(row.dataset.ch)) renderClean(); }
+  else openChoreDetail(row.dataset.ch);
+});
+$("openSettings3").onclick = () => $("openSettings").onclick();
+
+/* chore form */
+const chf = { id:null, room:"whole", unit:"week" };
+$("newChore").onclick = () => openChoreForm(null);
+function openChoreForm(id, room){
+  ensureCleaning();
+  const c = id ? choreById(id) : null;
+  chf.id = id; chf.room = c ? c.room : (room || L.rooms[0].id); chf.unit = c ? c.unit : "week";
+  $("choreTitle").textContent = c ? "Edit chore" : "New chore";
+  $("choreName").value = c ? c.name : ""; $("choreEvery").value = c ? c.every : 1; $("choreMins").value = c && c.mins ? c.mins : "";
+  $("choreLast").value = ""; $("choreLastWrap").hidden = !!c; $("choreDel").hidden = !c;
+  $("choreIdeas").hidden = !!c;
+  renderChoreForm(); openSheet($("choreSheet"));
+}
+function renderChoreForm(){
+  const used = new Set(L.chores.map(c=>c.name.toLowerCase()));
+  $("choreIdeas").innerHTML = CHORE_IDEAS.filter(i=>!used.has(i.toLowerCase())).slice(0, 8).map(i => `<button class="chip" data-idea="${i}">${i}</button>`).join("");
+  $("choreRooms").innerHTML = L.rooms.map(r => `<button class="chip ${r.id===chf.room?"on":""}" data-r="${r.id}">${r.icon} ${esc(r.name)}</button>`).join("");
+  const n = Number($("choreEvery").value) || 1;
+  $("choreUnit").innerHTML = ["day","week","month"].map(u => `<button class="chip ${u===chf.unit?"on":""}" data-u="${u}">${UNIT_LBL[u][n===1?0:1]}</button>`).join("");
+}
+$("choreIdeas").onclick = e => { const b = e.target.closest("[data-idea]"); if (b) $("choreName").value = b.dataset.idea; };
+$("choreRooms").onclick = e => { const b = e.target.closest("[data-r]"); if (b) { chf.room = b.dataset.r; renderChoreForm(); } };
+$("choreUnit").onclick = e => { const b = e.target.closest("[data-u]"); if (b) { chf.unit = b.dataset.u; renderChoreForm(); } };
+$("choreEvery").oninput = renderChoreForm;
+$("choreSave").onclick = () => {
+  const name = $("choreName").value.trim(); if (!name) { toast("Name the chore"); $("choreName").focus(); return; }
+  const every = Math.round(Number($("choreEvery").value)); if (!(every >= 1)) { toast("Repeat every 1 or more"); return; }
+  const body = { name, room: chf.room, every, unit: chf.unit, mins: Number($("choreMins").value) || 0 };
+  if (chf.id) Object.assign(choreById(chf.id), body);
+  else {
+    const last = $("choreLast").value;
+    const c = { id:newId(), created: todayStr(), ...body };
+    if (last && last <= todayStr()) c.lastBefore = last;
+    L.chores.push(c);
+  }
+  closeSheet(); lsave(); renderClean(); toast(chf.id ? "Chore updated" : "Chore added");
+};
+$("choreDel").onclick = () => { const c = choreById(chf.id); askConfirm(`Delete “${c.name}” and its history?`, "Delete", () => { L.chores = L.chores.filter(x=>x!==c); L.cleanLogs = L.cleanLogs.filter(l=>l.chore!==c.id); lsave(); renderClean(); }); };
+
+/* chore detail */
+let cdId = null;
+function openChoreDetail(id){
+  const c = choreById(id); if (!c) return;
+  cdId = id; const st = choreState(c), col = ST_COL[st.status], r = roomById(c.room);
+  const ls = L.cleanLogs.filter(l=>l.chore===id).sort((a,b)=>b.date.localeCompare(a.date));
+  const gaps = []; for (let i = 0; i < ls.length-1; i++) gaps.push(dayDiff(ls[i+1].date, ls[i].date));
+  const avgGap = gaps.length ? Math.round(gaps.reduce((s,x)=>s+x,0)/gaps.length) : null;
+  $("cdBody").innerHTML = `<h2 style="font-size:20px">${r.icon} ${esc(c.name)}</h2>
+    <div class="sub" style="margin:-8px 0 12px">${esc(r.name)} · ${everyText(c)}${c.mins?` · ~${c.mins} min`:""}</div>
+    <div class="stats">
+      <div class="stat"><span class="label">Status</span><b style="font-size:16px;color:${col.ink}">${st.label}</b><small>${st.last?"next "+fmtDay(st.next,{day:"numeric",month:"short"}):"&nbsp;"}</small></div>
+      <div class="stat"><span class="label">Done</span><b>${ls.length}×</b><small>${avgGap!==null?`on average every ${avgGap} day${avgGap===1?"":"s"}`:"&nbsp;"}</small></div>
+    </div>`;
+  $("cdDate").value = todayStr();
+  $("cdHist").innerHTML = ls.map(l => `<div class="entry"><span class="ei">✓</span><span class="et">${fmtDay(l.date,{weekday:"short",day:"numeric",month:"short",year:"numeric"})}</span><span class="ev"><button class="link" style="color:var(--exp);padding:0" data-undo="${l.id}">Remove</button></span></div>`).join("")
+    || (c.lastBefore ? `<div class="sub">Last done before tracking: ${fmtDay(c.lastBefore)}</div>` : `<div class="empty">Not done yet.</div>`);
+  if (!$("choreDetail").classList.contains("open")) openSheet($("choreDetail"));
+}
+$("cdDone").onclick = () => { const d = $("cdDate").value || todayStr(); if (d > todayStr()) { toast("Can't mark a future date"); return; } if (markDone(cdId, d)) { renderClean(); openChoreDetail(cdId); } };
+$("cdEdit").onclick = () => openChoreForm(cdId);
+$("cdHist").onclick = e => { const b = e.target.closest("[data-undo]"); if (!b) return; L.cleanLogs = L.cleanLogs.filter(l=>l.id!==b.dataset.undo); lsave(); renderClean(); openChoreDetail(cdId); };
+
+/* room form */
+const rf = { id:null, icon:"🏠" };
+$("newRoom").onclick = () => openRoomForm(null);
+function openRoomForm(id){
+  const r = id ? L.rooms.find(x=>x.id===id) : null;
+  rf.id = id; rf.icon = r ? r.icon : "🧺";
+  $("roomTitle").textContent = r ? "Edit room" : "New room";
+  $("roomName").value = r ? r.name : ""; $("roomDel").hidden = !r;
+  renderRoomForm(); openSheet($("roomSheet"));
+}
+function renderRoomForm(){ $("roomIcons").innerHTML = ROOM_ICONS.map(i => `<button class="chip ${i===rf.icon?"on":""}" data-i="${i}">${i}</button>`).join(""); }
+$("roomIcons").onclick = e => { const b = e.target.closest("[data-i]"); if (b) { rf.icon = b.dataset.i; renderRoomForm(); } };
+$("roomSave").onclick = () => {
+  const name = $("roomName").value.trim(); if (!name) { toast("Name the room"); return; }
+  if (rf.id) Object.assign(L.rooms.find(x=>x.id===rf.id), {name, icon:rf.icon}); else L.rooms.push({id:newId(), name, icon:rf.icon});
+  closeSheet(); lsave(); renderClean();
+};
+$("roomDel").onclick = () => {
+  const r = L.rooms.find(x=>x.id===rf.id); const n = L.chores.filter(c=>c.room===r.id).length;
+  if (L.rooms.length === 1) { toast("Keep at least one room"); return; }
+  askConfirm(`Delete room “${r.name}”?${n?` Its ${n} chore${n>1?"s":""} will move to ${L.rooms.find(x=>x!==r).name}.`:""}`, "Delete", () => {
+    const to = L.rooms.find(x=>x!==r).id; L.chores.forEach(c => { if (c.room === r.id) c.room = to; });
+    L.rooms = L.rooms.filter(x=>x!==r); lsave(); renderClean();
+  });
+};
+
+/* CSV of cleaning */
+$("cleanCsvBtn").onclick = () => {
+  const q = s => `"${String(s ?? "").replace(/"/g,'""')}"`;
+  const rows = ["date,room,chore,minutes,repeat"];
+  L.cleanLogs.slice().sort((a,b)=>a.date.localeCompare(b.date)).forEach(l => { const c = choreById(l.chore); if (!c) return; rows.push([l.date, q(roomById(c.room).name), q(c.name), l.mins||0, q(everyText(c))].join(",")); });
+  shareOrDownload(`my-cleaning-${todayStr()}.csv`, "﻿" + rows.join("\n"), "text/csv");
+};
+
+
+migrateAreas();
+ensureCleaning();
+setTab(["money","life","health","clean"].includes(tab) ? tab : "money");
 </script>
 </body>
 </html>
